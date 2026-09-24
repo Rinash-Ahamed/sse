@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Menu, X, Phone, ArrowUpRight, ArrowRight, Home, Package, Building2, Wrench, HardHat, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Menu, X, Phone, ArrowUpRight, ArrowRight, Home, Package, Building2, Wrench, HardHat, Mail, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { generalWhatsAppLink } from "@/lib/whatsapp";
 
@@ -76,32 +76,26 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper/95 shadow-[0_4px_24px_rgba(32,36,39,0.05)] backdrop-blur-xl">
-      <div className="hidden border-b border-line/60 bg-surface/60 sm:block">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-2 text-[11px] text-ink-muted lg:px-8">
-          <span className="inline-flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-accent" aria-hidden="true" /> Coimbatore, Tamil Nadu</span>
-          <span className="hidden items-center gap-2 lg:inline-flex"><Wrench className="h-3.5 w-3.5 text-accent" aria-hidden="true" /> Equipment sales &middot; Repairs &middot; Servicing</span>
-          <a href="tel:+919842230721" className={cn("inline-flex items-center gap-2 rounded-sm hover:text-accent", focusStyle)}><Phone className="h-3.5 w-3.5 text-accent" aria-hidden="true" /> +91 98422 30721</a>
-        </div>
-      </div>
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:h-22 sm:px-6 lg:px-8">
+    <header className="sticky top-3 z-50 mx-3 rounded-2xl border border-white/80 bg-paper/88 shadow-[0_12px_40px_rgba(32,36,39,0.13)] backdrop-blur-2xl xl:mx-auto xl:max-w-[calc(100%-48px)]">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-3 px-4 sm:h-20 sm:px-6 lg:px-8">
         <Brand />
         <nav aria-label="Main navigation" className="hidden items-center gap-1 xl:flex">
-          {links.map(({ href, label, icon: Icon }) => (
+          {links.map(({ href, label }) => (
             <Link key={href} href={href} onClick={(event) => {
               if (href === "/" || href.includes("#")) {
                 event.preventDefault();
                 window.location.assign(href);
               }
-            }} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("inline-flex min-h-11 items-center gap-1.5 rounded-md px-2.5 text-[12px] font-medium transition-colors hover:bg-accent/5 hover:text-accent", focusStyle, isActive(href) ? "bg-accent/8 text-accent" : "text-ink-muted")}>
-              <Icon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />{label}
+            }} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("group relative inline-flex min-h-11 items-center px-3 text-[13px] font-semibold transition-colors hover:text-accent", focusStyle, isActive(href) ? "text-accent" : "text-ink-muted")}>
+              {label}
+              <span aria-hidden="true" className={cn("absolute bottom-1 left-3 right-3 h-[2px] origin-left rounded-full bg-accent transition-transform duration-300", isActive(href) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100")} />
             </Link>
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <a href="tel:+919842230721" aria-label="Call Shree Sanjay Equipments" className={cn("inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-accent transition-colors hover:bg-surface sm:hidden", focusStyle)}><Phone className="h-[18px] w-[18px]" aria-hidden="true" /></a>
-          <Link href="/contact#enquiry" className={cn("hidden min-h-11 items-center gap-2 rounded-md bg-accent px-4 text-[13px] font-medium text-white transition-colors hover:bg-accent-strong sm:inline-flex", focusStyle)}>Get a Quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
-          <button ref={toggleRef} type="button" className={cn("inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-md border border-line bg-paper px-3 text-sm font-medium text-ink hover:bg-surface xl:hidden", focusStyle)} onClick={() => setOpen(true)} aria-label="Open navigation menu" aria-haspopup="dialog" aria-expanded={open} aria-controls="mobile-navigation">
+          <Link href="/contact#enquiry" className={cn("hidden min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-[13px] font-semibold text-white shadow-[0_7px_18px_rgba(176,0,24,0.2)] transition-all hover:-translate-y-0.5 hover:bg-accent-strong sm:inline-flex", focusStyle)}>Get a Quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
+          <button ref={toggleRef} type="button" className={cn("inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-xl bg-ink px-3 text-sm font-medium text-white transition-colors hover:bg-accent xl:hidden", focusStyle)} onClick={() => setOpen(true)} aria-label="Open navigation menu" aria-haspopup="dialog" aria-expanded={open} aria-controls="mobile-navigation">
             <Menu className="h-5 w-5" aria-hidden="true" /><span className="hidden sm:inline">Menu</span>
           </button>
         </div>
@@ -149,7 +143,6 @@ export default function Navbar() {
                 <a href="tel:+919842230721" className={cn("inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line text-xs font-medium hover:bg-surface", focusStyle)}><Phone className="h-4 w-4 text-accent" aria-hidden="true" />Call Us</a>
                 <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className={cn("inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line text-xs font-medium hover:bg-surface", focusStyle)}><MessageCircle className="h-4 w-4 text-accent" aria-hidden="true" />WhatsApp</a>
               </div>
-              <p className="mt-5 flex items-center gap-2 text-[11px] text-ink-muted"><MapPin className="h-3.5 w-3.5 text-accent" aria-hidden="true" /> Coimbatore, Tamil Nadu</p>
             </div>
           </div>
         </div>

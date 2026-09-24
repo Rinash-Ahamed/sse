@@ -22,21 +22,10 @@
   user-select: none;
 }
 
-.shine {
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  pointer-events: none;
-  opacity: 0;
-  background: radial-gradient(circle at var(--shine-x, 60%) var(--shine-y, 40%), rgba(255, 255, 255, .2), transparent 32%);
-  transition: opacity 300ms ease;
-}
-
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .scene {
     transform: none !important;
     transition: none !important;
     will-change: auto;
   }
-  .shine { display: none; }
 }
