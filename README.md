@@ -23,11 +23,14 @@ Copy `.env.example` to `.env.local` and fill in:
 ```
 RESEND_API_KEY=          # from https://resend.com: required to actually send contact-form emails
 CONTACT_TO_EMAIL=sanjayequipments@gmail.com
-CONTACT_FROM_EMAIL=Website Enquiry <onboarding@resend.dev>
+CONTACT_FROM_EMAIL=Website Enquiry <website@your-verified-domain.com>
 ```
 
 Without `RESEND_API_KEY`, the contact form reports that it is unavailable
 and directs visitors to call or use WhatsApp. Set the key before going live.
+The `CONTACT_FROM_EMAIL` address must use a domain verified for sending in
+Resend. Restart the local server after changing `.env.local`, and set the
+same variables in your hosting provider for the deployed site.
 
 ## Project structure
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { contactSchema } from "@/lib/schema";
 import { products } from "@/lib/products";
 import { cn } from "@/lib/utils";
@@ -14,7 +14,7 @@ const initialValues = {
   phone: "",
   email: "",
   company: "",
-  product: "",
+  products: [] as string[],
   message: "",
   website: "", // honeypot
 };
@@ -25,8 +25,17 @@ export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
 
-  function update(field: keyof typeof values, value: string) {
+  function update(field: Exclude<keyof typeof values, "products">, value: string) {
     setValues((v) => ({ ...v, [field]: value }));
+  }
+
+  function toggleProduct(name: string) {
+    setValues((v) => ({
+      ...v,
+      products: v.products.includes(name)
+        ? v.products.filter((item) => item !== name)
+        : [...v.products, name],
+    }));
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -136,40 +145,59 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className="text-xs text-ink-muted" htmlFor="equipment-or-service">
+        <span className="text-xs text-ink-muted" id="equipment-or-service-label">
           Equipment or service needed
-        </label>
-        <div className="relative mt-1.5">
-          <select
-            id="equipment-or-service"
-            value={values.product}
-            onChange={(e) => update("product", e.target.value)}
-            className={cn(
-              "w-full appearance-none border border-line bg-transparent px-3.5 py-3 pr-10 text-sm outline-none transition-colors focus:border-ink",
-              values.product ? "text-ink" : "text-ink-muted",
-            )}
+        </span>
+        <details className="group relative mt-1.5 border border-line open:border-ink">
+          <summary
+            aria-labelledby="equipment-or-service-label"
+            className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3 text-sm marker:hidden [&::-webkit-details-marker]:hidden"
           >
-            <option value="">Choose equipment or service (optional)</option>
-            <optgroup label="Equipment">
-              {products.map((product) => (
-                <option key={product.id} value={product.name}>{product.name}</option>
-              ))}
-            </optgroup>
-            <optgroup label="Services">
-              <option value="Equipment Repairs">Equipment Repairs</option>
-              <option value="Equipment Servicing">Equipment Servicing</option>
-            </optgroup>
-            <optgroup label="Other">
-              <option value="Not sure / Other">Not sure / Other</option>
-            </optgroup>
-          </select>
-          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" aria-hidden="true" />
-        </div>
+            <span className={cn("min-w-0 truncate", values.products.length ? "text-ink" : "text-ink-muted")}>
+              {values.products.length === 0
+                ? "Choose equipment or services (optional)"
+                : values.products.length === 1
+                  ? values.products[0]
+                  : `${values.products.length} items selected`}
+            </span>
+            <ChevronDown className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-open:rotate-180" aria-hidden="true" />
+          </summary>
+          <div className="max-h-72 overflow-y-auto border-t border-line bg-white px-3.5 py-3">
+            <p className="mb-3 text-xs text-ink-muted">Select as many as you need.</p>
+            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-ink-muted">Equipment</p>
+            {products.map((product) => (
+              <SelectionOption
+                key={product.id}
+                name={product.name}
+                checked={values.products.includes(product.name)}
+                onChange={() => toggleProduct(product.name)}
+              />
+            ))}
+            <p className="mb-1.5 mt-4 text-[11px] font-semibold uppercase tracking-wider text-ink-muted">Services</p>
+            {["Equipment Repairs", "Equipment Servicing"].map((service) => (
+              <SelectionOption
+                key={service}
+                name={service}
+                checked={values.products.includes(service)}
+                onChange={() => toggleProduct(service)}
+              />
+            ))}
+            <p className="mb-1.5 mt-4 text-[11px] font-semibold uppercase tracking-wider text-ink-muted">Other</p>
+            <SelectionOption
+              name="Not sure / Other"
+              checked={values.products.includes("Not sure / Other")}
+              onChange={() => toggleProduct("Not sure / Other")}
+            />
+          </div>
+        </details>
+        {values.products.length > 0 && (
+          <p className="mt-2 text-xs leading-relaxed text-ink-muted">Selected: {values.products.join(", ")}</p>
+        )}
       </div>
 
       <div>
         <label className="text-xs text-ink-muted" htmlFor="message">
-          Message <span className="text-accent">*</span>
+          Message (optional)
         </label>
         <textarea
           id="message"
@@ -177,12 +205,8 @@ export default function ContactForm() {
           placeholder="Tell us what equipment you need, or describe the machine that needs repair or servicing."
           value={values.message}
           onChange={(e) => update("message", e.target.value)}
-          className={cn(
-            "mt-1.5 w-full border bg-transparent px-3.5 py-3 text-sm outline-none transition-colors resize-none",
-            errors.message ? "border-red-500" : "border-line focus:border-ink",
-          )}
+          className="mt-1.5 w-full resize-none border border-line bg-transparent px-3.5 py-3 text-sm outline-none transition-colors focus:border-ink"
         />
-        {errors.message && <p className="mt-1 text-xs text-red-600">{errors.message}</p>}
       </div>
 
       {serverError && (
@@ -203,6 +227,21 @@ export default function ContactForm() {
         {status === "submitting" ? "Sending…" : "Send Enquiry"}
       </button>
     </form>
+  );
+}
+
+function SelectionOption({ name, checked, onChange }: { name: string; checked: boolean; onChange: () => void }) {
+  return (
+    <label className="flex cursor-pointer items-center gap-3 rounded px-2 py-2 text-sm text-ink hover:bg-surface/70 focus-within:bg-surface/70 focus-within:outline-2 focus-within:outline-accent">
+      <span className={cn(
+        "flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border",
+        checked ? "border-accent bg-accent text-white" : "border-line bg-white",
+      )}>
+        {checked && <Check className="h-3 w-3" strokeWidth={3} aria-hidden="true" />}
+      </span>
+      <input type="checkbox" checked={checked} onChange={onChange} className="sr-only" />
+      <span>{name}</span>
+    </label>
   );
 }
 

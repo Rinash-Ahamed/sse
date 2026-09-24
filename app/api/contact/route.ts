@@ -24,26 +24,40 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const subject = `Website Enquiry: ${data.product || "General"}`;
+  const enquiryTopic = data.products.length === 1
+    ? data.products[0]
+    : data.products.length > 1
+      ? `${data.products.length} items`
+      : "General";
+  const subject = `Website Enquiry: ${enquiryTopic}`;
   const text = [
     `Name: ${data.name}`,
     `Phone: ${data.phone}`,
     `Email: ${data.email || "-"}`,
     `Company: ${data.company || "-"}`,
-    `Equipment or service: ${data.product || "-"}`,
-    `Message: ${data.message}`,
+    `Equipment or services:\n${data.products.length ? data.products.map((item) => `- ${item}`).join("\n") : "-"}`,
+    `Message: ${data.message || "-"}`,
     "",
     `Date/Time: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`,
   ].join("\n");
 
   const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.CONTACT_TO_EMAIL || "sanjayequipments@gmail.com";
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || "Website Enquiry <onboarding@resend.dev>";
+  const fromEmail = process.env.CONTACT_FROM_EMAIL;
 
   if (!apiKey) {
     console.error("RESEND_API_KEY not set. Enquiry form is unavailable.");
     return NextResponse.json(
       { ok: false, error: "The enquiry form is unavailable right now. Please call or WhatsApp us." },
+      { status: 503 },
+    );
+  }
+
+  const senderAddress = fromEmail?.match(/<([^<>]+)>$/)?.[1] ?? fromEmail;
+  if (!fromEmail || !senderAddress || !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(senderAddress)) {
+    console.error("CONTACT_FROM_EMAIL must contain a full sender email address.");
+    return NextResponse.json(
+      { ok: false, error: "The enquiry form is not configured correctly yet. Please call or WhatsApp us." },
       { status: 503 },
     );
   }
