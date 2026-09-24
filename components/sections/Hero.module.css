@@ -1,0 +1,42 @@
+.visual {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  perspective: 1400px;
+}
+
+.scene {
+  position: absolute;
+  inset: -3%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 500ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
+}
+
+.shine {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at var(--shine-x, 60%) var(--shine-y, 40%), rgba(255, 255, 255, .2), transparent 32%);
+  transition: opacity 300ms ease;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .scene {
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+  .shine { display: none; }
+}

@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --color-paper: #f6f4ef;
+  --color-surface: #e9e8e4;
+  --color-ink: #202427;
+  --color-ink-muted: #4b5156;
+  --color-line: #d5d3ce;
+  --color-accent: #b00018;
+  --color-accent-strong: #7d0012;
+  --color-steel: #4b5156;
+
+  --font-heading: var(--font-manrope);
+  --font-body: var(--font-inter);
+  --font-mono-label: var(--font-inter);
+}
+
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-surface: var(--color-surface);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-line: var(--color-line);
+  --color-accent: var(--color-accent);
+  --color-accent-strong: var(--color-accent-strong);
+  --color-steel: var(--color-steel);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+  --font-mono-label: var(--font-mono-label);
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+.label-mono {
+  font-family: var(--font-mono-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.reveal-mask {
+  overflow: hidden;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}

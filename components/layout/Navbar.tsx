@@ -1,0 +1,159 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { Menu, X, Phone, ArrowUpRight, ArrowRight, Home, Package, Building2, Wrench, HardHat, Mail, MapPin, MessageCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { generalWhatsAppLink } from "@/lib/whatsapp";
+
+const links = [
+  { href: "/", label: "Home", icon: Home, description: "Discover Shree Sanjay Equipments" },
+  { href: "/products", label: "Products", icon: Package, description: "Find equipment for your next project" },
+  { href: "/about", label: "About", icon: Building2, description: "Get to know our team" },
+  { href: "/#services", label: "Services", icon: Wrench, description: "Equipment repairs and servicing" },
+  { href: "/#applications", label: "Applications", icon: HardHat, description: "Equipment for every stage of site work" },
+  { href: "/contact", label: "Contact", icon: Mail, description: "Talk to us about your requirements" },
+];
+const focusStyle = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent";
+
+function subscribeHash(callback: () => void) {
+  window.addEventListener("hashchange", callback);
+  window.addEventListener("popstate", callback);
+  return () => {
+    window.removeEventListener("hashchange", callback);
+    window.removeEventListener("popstate", callback);
+  };
+}
+
+function Brand({ onClick }: { onClick?: () => void }) {
+  return (
+    <Link href="/" aria-label="Shree Sanjay Equipments home" onClick={onClick} className={cn("flex shrink-0 items-center gap-2 rounded-md", focusStyle)}>
+      <Image src="/images/brand/logo-mark.png" alt="" width={48} height={48} className="h-10 w-10 object-contain sm:h-12 sm:w-12" priority />
+      <span className="font-heading leading-tight">
+        <span className="block text-[13px] font-extrabold tracking-tight text-accent sm:text-base">SHREE SANJAY</span>
+        <span className="mt-1 block text-[9px] font-semibold tracking-[0.22em] text-ink sm:text-[10px]">EQUIPMENTS</span>
+      </span>
+    </Link>
+  );
+}
+
+export default function Navbar() {
+  const pathname = usePathname();
+  const hash = useSyncExternalStore(subscribeHash, () => window.location.hash, () => "");
+  const [open, setOpen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  function isActive(href: string) {
+    if (href.includes("#")) return pathname === "/" && hash === href.slice(1);
+    if (href === "/") return pathname === "/" && !["#services", "#applications"].includes(hash);
+    return pathname === href || pathname.startsWith(href + "/");
+  }
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    const toggle = toggleRef.current;
+    if (!dialog || !open) return;
+    const previousOverflow = document.body.style.overflow;
+    dialog.showModal();
+    closeRef.current?.focus();
+    document.body.style.overflow = "hidden";
+    const desktop = window.matchMedia("(min-width: 1280px)");
+    const onResize = () => { if (desktop.matches) setOpen(false); };
+    const onHistory = () => setOpen(false);
+    desktop.addEventListener("change", onResize);
+    window.addEventListener("popstate", onHistory);
+    return () => {
+      desktop.removeEventListener("change", onResize);
+      window.removeEventListener("popstate", onHistory);
+      document.body.style.overflow = previousOverflow;
+      dialog.close();
+      if (!desktop.matches) toggle?.focus();
+    };
+  }, [open]);
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-line bg-paper/95 shadow-[0_4px_24px_rgba(32,36,39,0.05)] backdrop-blur-xl">
+      <div className="hidden border-b border-line/60 bg-surface/60 sm:block">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-2 text-[11px] text-ink-muted lg:px-8">
+          <span className="inline-flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-accent" aria-hidden="true" /> Coimbatore, Tamil Nadu</span>
+          <span className="hidden items-center gap-2 lg:inline-flex"><Wrench className="h-3.5 w-3.5 text-accent" aria-hidden="true" /> Equipment sales &middot; Repairs &middot; Servicing</span>
+          <a href="tel:+919842230721" className={cn("inline-flex items-center gap-2 rounded-sm hover:text-accent", focusStyle)}><Phone className="h-3.5 w-3.5 text-accent" aria-hidden="true" /> +91 98422 30721</a>
+        </div>
+      </div>
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:h-22 sm:px-6 lg:px-8">
+        <Brand />
+        <nav aria-label="Main navigation" className="hidden items-center gap-1 xl:flex">
+          {links.map(({ href, label, icon: Icon }) => (
+            <Link key={href} href={href} onClick={(event) => {
+              if (href === "/" || href.includes("#")) {
+                event.preventDefault();
+                window.location.assign(href);
+              }
+            }} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("inline-flex min-h-11 items-center gap-1.5 rounded-md px-2.5 text-[12px] font-medium transition-colors hover:bg-accent/5 hover:text-accent", focusStyle, isActive(href) ? "bg-accent/8 text-accent" : "text-ink-muted")}>
+              <Icon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />{label}
+            </Link>
+          ))}
+        </nav>
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <a href="tel:+919842230721" aria-label="Call Shree Sanjay Equipments" className={cn("inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-accent transition-colors hover:bg-surface sm:hidden", focusStyle)}><Phone className="h-[18px] w-[18px]" aria-hidden="true" /></a>
+          <Link href="/contact#enquiry" className={cn("hidden min-h-11 items-center gap-2 rounded-md bg-accent px-4 text-[13px] font-medium text-white transition-colors hover:bg-accent-strong sm:inline-flex", focusStyle)}>Get a Quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
+          <button ref={toggleRef} type="button" className={cn("inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-md border border-line bg-paper px-3 text-sm font-medium text-ink hover:bg-surface xl:hidden", focusStyle)} onClick={() => setOpen(true)} aria-label="Open navigation menu" aria-haspopup="dialog" aria-expanded={open} aria-controls="mobile-navigation">
+            <Menu className="h-5 w-5" aria-hidden="true" /><span className="hidden sm:inline">Menu</span>
+          </button>
+        </div>
+      </div>
+      <dialog ref={dialogRef} id="mobile-navigation" aria-labelledby="navigation-title" onCancel={() => setOpen(false)} onClick={(event) => { if (event.target === event.currentTarget) setOpen(false); }} onKeyDown={(event) => {
+        if (event.key !== "Tab") return;
+        const controls = event.currentTarget.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }} className="fixed inset-y-0 right-0 left-auto m-0 h-dvh max-h-none w-full max-w-[440px] border-0 bg-paper p-0 text-ink shadow-2xl backdrop:bg-ink/45 backdrop:backdrop-blur-sm">
+        <div className="flex h-full flex-col">
+          <div className="flex shrink-0 items-center justify-between gap-3 border-b border-line px-5 py-5">
+            <Brand onClick={() => setOpen(false)} />
+            <button ref={closeRef} type="button" onClick={() => setOpen(false)} aria-label="Close navigation menu" className={cn("inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line hover:bg-surface", focusStyle)}><X className="h-5 w-5" aria-hidden="true" /></button>
+          </div>
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-6">
+            <h2 id="navigation-title" className="label-mono mb-4 text-[10px] text-ink-muted">Explore Shree Sanjay</h2>
+            <nav aria-label="Mobile and tablet navigation" className="space-y-1">
+              {links.map(({ href, label, icon: Icon, description }) => (
+                <Link key={href} href={href} onClick={(event) => {
+                  setOpen(false);
+                  if (href === "/" || href.includes("#")) {
+                    event.preventDefault();
+                    window.location.assign(href);
+                  }
+                }} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("group flex min-h-[68px] items-center gap-3 rounded-lg px-3 py-3 transition-colors hover:bg-surface", focusStyle, isActive(href) && "bg-accent/7")}>
+                  <span className={cn("inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md", isActive(href) ? "bg-accent text-white" : "border border-line bg-paper text-accent")}><Icon className="h-5 w-5" strokeWidth={1.6} aria-hidden="true" /></span>
+                  <span className="min-w-0 flex-1"><span className={cn("block text-sm font-semibold", isActive(href) && "text-accent")}>{label}</span><span className="mt-1 block text-[11px] leading-relaxed text-ink-muted">{description}</span></span>
+                  <ArrowUpRight className="h-4 w-4 shrink-0 text-ink-muted group-hover:text-accent" aria-hidden="true" />
+                </Link>
+              ))}
+            </nav>
+            <div className="mt-6 border-t border-line pt-6">
+              <p className="text-sm font-semibold">Let&apos;s get your job moving.</p>
+              <p className="mt-1 text-xs leading-relaxed text-ink-muted">Equipment enquiries, repairs and servicing.</p>
+              <Link href="/contact#enquiry" onClick={() => setOpen(false)} className={cn("mt-4 flex min-h-12 items-center justify-between rounded-md bg-accent px-4 text-sm font-medium text-white hover:bg-accent-strong", focusStyle)}>Get a Quote <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <a href="tel:+919842230721" className={cn("inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line text-xs font-medium hover:bg-surface", focusStyle)}><Phone className="h-4 w-4 text-accent" aria-hidden="true" />Call Us</a>
+                <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className={cn("inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line text-xs font-medium hover:bg-surface", focusStyle)}><MessageCircle className="h-4 w-4 text-accent" aria-hidden="true" />WhatsApp</a>
+              </div>
+              <p className="mt-5 flex items-center gap-2 text-[11px] text-ink-muted"><MapPin className="h-3.5 w-3.5 text-accent" aria-hidden="true" /> Coimbatore, Tamil Nadu</p>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </header>
+  );
+}
