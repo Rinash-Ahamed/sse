@@ -7,7 +7,7 @@ export const contactSchema = z.object({
   company: z.string().optional().or(z.literal("")),
   product: z.string().optional().or(z.literal("")),
   message: z.string().min(5, "Please add a short message"),
-  // honeypot — must stay empty
+  // Honeypot must stay empty.
   website: z.string().max(0).optional().or(z.literal("")),
 });
 

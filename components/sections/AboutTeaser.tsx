@@ -13,19 +13,17 @@ export default function AboutTeaser() {
             as="h2"
             className="mt-4 font-heading font-extrabold text-3xl md:text-4xl tracking-tight leading-[1.1]"
           >
-            Practical equipment.
+            Built around the work
             <br />
-            Straightforward support.
+            you do.
           </RevealHeading>
         </div>
         <div className="md:col-span-6 md:col-start-7 flex flex-col justify-center">
           <LineReveal className="mb-6 hidden md:block" />
           <p className="text-[15px] md:text-base text-ink-muted leading-relaxed max-w-lg">
-            Shree Sanjay Equipments is based on Avinashi Road, Coimbatore and
-            supplies construction machinery, site equipment and related
-            tools for practical construction requirements, with repair and
-            servicing support. We work directly
-            with customers through phone, WhatsApp and email enquiries.
+            Find equipment for the next job, then keep it working with repair
+            and servicing support. Based in Coimbatore, we are here to talk
+            through your equipment requirements directly.
           </p>
           <Link
             href="/about"

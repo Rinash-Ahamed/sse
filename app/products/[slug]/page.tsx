@@ -145,7 +145,7 @@ export default async function ProductDetailPage({
               Interested in the {product.name}?
             </p>
             <p className="mt-2 text-sm text-ink-muted">
-              {priceLabel(product)} — reach out for full details and current
+              {priceLabel(product)}. Reach out for full details and current
               availability.
             </p>
             <Link

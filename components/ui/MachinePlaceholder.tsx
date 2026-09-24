@@ -7,7 +7,6 @@ import {
   Filter,
   Scissors,
   Package,
-  Hammer,
   type LucideIcon,
 } from "lucide-react";
 import type { CategorySlug } from "@/lib/products";
@@ -19,7 +18,6 @@ const iconByCategory: Record<CategorySlug, LucideIcon> = {
   screening: Filter,
   cutting: Scissors,
   "site-equipment": Wrench,
-  "power-tools": Hammer,
 };
 
 export default function MachinePlaceholder({

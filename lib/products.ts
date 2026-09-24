@@ -37,8 +37,7 @@ export type CategorySlug =
   | "material-lifting"
   | "screening"
   | "cutting"
-  | "site-equipment"
-  | "power-tools";
+  | "site-equipment";
 
 export type Category = {
   slug: CategorySlug;
@@ -90,13 +89,6 @@ export const categories: Category[] = [
     shortName: "Site Equipment",
     description: "General site and material handling equipment.",
     number: "06",
-  },
-  {
-    slug: "power-tools",
-    name: "Power Tools",
-    shortName: "Power Tools",
-    description: "Construction power tools, including HiKOKI.",
-    number: "07",
   },
 ];
 
@@ -167,6 +159,7 @@ export const products: Product[] = [
   },
   {
     id: "earth-rammer",
+    images: ["/images/products/15.png"],
     slug: "earth-rammer",
     name: "Earth Rammer",
     category: "compaction",
@@ -183,6 +176,7 @@ export const products: Product[] = [
   },
   {
     id: "construction-lift",
+    images: ["/images/products/16.png"],
     slug: "construction-lift",
     name: "Construction Lift",
     category: "material-lifting",
@@ -237,21 +231,6 @@ export const products: Product[] = [
     seoTitle: "Single Wheel Barrow in Coimbatore | Shree Sanjay Equipments",
     seoDescription:
       "Single wheel barrow available from Shree Sanjay Equipments, Coimbatore. Contact for latest price and details.",
-  },
-  {
-    id: "hikoki-power-tools",
-    slug: "hikoki-power-tools",
-    name: "HiKOKI Power Tools",
-    category: "power-tools",
-    brand: "HiKOKI",
-    shortDescription: "Construction power tools from HiKOKI.",
-    description:
-      "Shree Sanjay Equipments appears in the official HiKOKI India dealer directory. Contact us for current HiKOKI power tool availability, models and pricing.",
-    priceStatus: "contact-for-latest-price",
-    applications: ["General Construction", "Site Power Tools"],
-    seoTitle: "HiKOKI Power Tools in Coimbatore | Shree Sanjay Equipments",
-    seoDescription:
-      "HiKOKI construction power tools available through Shree Sanjay Equipments, Coimbatore. Contact for current availability and pricing.",
   },
 ];
 

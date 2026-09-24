@@ -9,7 +9,7 @@ import { generalWhatsAppLink } from "@/lib/whatsapp";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Shree Sanjay Equipments, Coimbatore — call, WhatsApp or send an enquiry for construction equipment, repairs and servicing.",
+    "Contact Shree Sanjay Equipments, Coimbatore. Call, WhatsApp or send an enquiry for construction equipment, repairs and servicing.",
 };
 
 const GOOGLE_LOCATION = "https://share.google/YZLdzzSvJ0YSF4a0L";
@@ -22,7 +22,7 @@ export default function ContactPage() {
         Get in Touch
       </h1>
       <p className="mt-4 text-[15px] md:text-base text-ink-muted max-w-lg leading-relaxed">
-        Call, WhatsApp or send us your requirement — our team will get back
+        Call, WhatsApp or send us your requirement. Our team will get back
         to you with the latest pricing and details.
       </p>
 

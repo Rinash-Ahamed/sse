@@ -19,12 +19,12 @@ export async function POST(req: Request) {
 
   const data = parsed.data;
 
-  // Honeypot triggered — silently accept without sending, to not tip off bots.
+  // Honeypot triggered. Silently accept without sending, to not tip off bots.
   if (data.website) {
     return NextResponse.json({ ok: true });
   }
 
-  const subject = `Website Enquiry — ${data.product || "General"}`;
+  const subject = `Website Enquiry: ${data.product || "General"}`;
   const text = [
     `Name: ${data.name}`,
     `Phone: ${data.phone}`,
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
   const fromEmail = process.env.CONTACT_FROM_EMAIL || "Website Enquiry <onboarding@resend.dev>";
 
   if (!apiKey) {
-    // No email provider configured yet — log so the enquiry isn't silently lost during setup.
+    // No email provider configured yet. Log so the enquiry isn't silently lost during setup.
     console.warn("RESEND_API_KEY not set. Enquiry received but not emailed:\n", text);
     return NextResponse.json({ ok: true, warning: "Email not configured yet." });
   }

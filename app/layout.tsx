@@ -28,8 +28,8 @@ export const metadata: Metadata = {
     "Construction equipment, repairs and servicing from Shree Sanjay Equipments, Coimbatore, Tamil Nadu.",
   keywords: [
     "Shree Sanjay Equipments",
-    "Construction Equipment Coimbatore",
-    "Construction Equipment Supplier Coimbatore",
+    "Construction Equipments Coimbatore",
+    "Construction Equipments Supplier Coimbatore",
     "Construction Machinery Coimbatore",
     "Concrete Equipment Coimbatore",
     "Compaction Equipment Coimbatore",
