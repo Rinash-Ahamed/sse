@@ -59,8 +59,8 @@ export default function ProductGrid({ initialCategory = "all" }: { initialCatego
 
       {filtered.length > 0 ? (
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filtered.map((p, i) => (
-            <ProductCard key={p.id} product={p} index={i} />
+          {filtered.map((p) => (
+            <ProductCard key={p.id} product={p} />
           ))}
         </div>
       ) : (

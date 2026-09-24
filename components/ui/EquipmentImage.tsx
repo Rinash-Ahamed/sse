@@ -2,7 +2,7 @@ import Image from "next/image";
 import MachinePlaceholder from "@/components/ui/MachinePlaceholder";
 import type { CategorySlug } from "@/lib/products";
 const categoryImages: Partial<Record<CategorySlug, string>> = {
-  "concrete-vibration": "/images/products/12.png", compaction: "/images/products/10.png",
+  "concrete-equipment": "/images/products/12.png", compaction: "/images/products/10.png",
   "material-lifting": "/images/products/9.png", screening: "/images/products/5.png",
   cutting: "/images/products/4.png", "site-equipment": "/images/products/7.png",
 };

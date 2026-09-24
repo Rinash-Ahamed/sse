@@ -3,7 +3,6 @@ import {
   Settings2,
   Wrench,
   Layers,
-  Waves,
   Filter,
   Scissors,
   Package,
@@ -12,7 +11,7 @@ import {
 import type { CategorySlug } from "@/lib/products";
 
 const iconByCategory: Record<CategorySlug, LucideIcon> = {
-  "concrete-vibration": Waves,
+  "concrete-equipment": Settings2,
   compaction: Layers,
   "material-lifting": Package,
   screening: Filter,

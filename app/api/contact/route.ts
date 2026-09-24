@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     `Phone: ${data.phone}`,
     `Email: ${data.email || "-"}`,
     `Company: ${data.company || "-"}`,
-    `Product: ${data.product || "-"}`,
+    `Equipment or service: ${data.product || "-"}`,
     `Message: ${data.message}`,
     "",
     `Date/Time: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`,

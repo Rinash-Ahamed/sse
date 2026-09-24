@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { ChevronDown } from "lucide-react";
 import { contactSchema } from "@/lib/schema";
+import { products } from "@/lib/products";
 import { cn } from "@/lib/utils";
 import { generalWhatsAppLink } from "@/lib/whatsapp";
 
@@ -133,12 +135,37 @@ export default function ContactForm() {
         />
       </div>
 
-      <Field
-          label="Equipment or service needed"
-        value={values.product}
-        error={errors.product}
-        onChange={(v) => update("product", v)}
-      />
+      <div>
+        <label className="text-xs text-ink-muted" htmlFor="equipment-or-service">
+          Equipment or service needed
+        </label>
+        <div className="relative mt-1.5">
+          <select
+            id="equipment-or-service"
+            value={values.product}
+            onChange={(e) => update("product", e.target.value)}
+            className={cn(
+              "w-full appearance-none border border-line bg-transparent px-3.5 py-3 pr-10 text-sm outline-none transition-colors focus:border-ink",
+              values.product ? "text-ink" : "text-ink-muted",
+            )}
+          >
+            <option value="">Choose equipment or service (optional)</option>
+            <optgroup label="Equipment">
+              {products.map((product) => (
+                <option key={product.id} value={product.name}>{product.name}</option>
+              ))}
+            </optgroup>
+            <optgroup label="Services">
+              <option value="Equipment Repairs">Equipment Repairs</option>
+              <option value="Equipment Servicing">Equipment Servicing</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option value="Not sure / Other">Not sure / Other</option>
+            </optgroup>
+          </select>
+          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" aria-hidden="true" />
+        </div>
+      </div>
 
       <div>
         <label className="text-xs text-ink-muted" htmlFor="message">

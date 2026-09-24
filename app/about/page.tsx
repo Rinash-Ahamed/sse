@@ -83,7 +83,7 @@ export default function AboutPage() {
           </div>
           <div className="max-w-xl self-end space-y-5 text-base leading-relaxed text-ink-muted">
             <p>
-              A machine has to fit the work in front of you. Our range covers concrete and vibration, compaction, material lifting, screening, cutting and general site equipment.
+              A machine has to fit the work in front of you. Our range covers concrete mixing, compaction, material lifting, screening, cutting and general site equipment.
             </p>
             <p>
               We also take enquiries for equipment repairs and servicing. Share what you are using and what you need help with, and our team can discuss the next step with you.

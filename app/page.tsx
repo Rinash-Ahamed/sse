@@ -4,7 +4,6 @@ import CategoryGrid from "@/components/sections/CategoryGrid";
 import FeaturedProducts from "@/components/sections/FeaturedProducts";
 import MachineStory from "@/components/sections/MachineStory";
 import Applications from "@/components/sections/Applications";
-import AboutTeaser from "@/components/sections/AboutTeaser";
 import EnquiryCTA from "@/components/sections/EnquiryCTA";
 import ContactPreview from "@/components/sections/ContactPreview";
 import Services from "@/components/sections/Services";
@@ -19,7 +18,6 @@ export default function Home() {
       <Services />
       <MachineStory />
       <Applications />
-      <AboutTeaser />
       <EnquiryCTA />
       <ContactPreview />
     </>

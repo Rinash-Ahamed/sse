@@ -1,25 +1,16 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { Product } from "@/lib/products";
 import { priceLabel, getCategoryBySlug } from "@/lib/products";
 import { productWhatsAppLink } from "@/lib/whatsapp";
 import EquipmentImage from "@/components/ui/EquipmentImage";
 
-export default function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
+export default function ProductCard({ product }: { product: Product }) {
   const category = getCategoryBySlug(product.category);
   const url = `/products/${product.slug}`;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 0.45, delay: (index % 6) * 0.05 }}
-      className="group relative flex h-full min-w-0 flex-col border border-line bg-paper transition-colors hover:border-ink/40"
-    >
+    <div className="group relative flex h-full min-w-0 flex-col border border-line bg-paper transition-colors hover:border-ink/40">
       <Link href={`/products/${product.slug}`} className="flex min-w-0 flex-1 flex-col">
         <div className="relative aspect-[4/3] overflow-hidden border-b border-line">
           <div className="absolute inset-0 transition-transform duration-300 ease-out group-hover:scale-[1.02]">
@@ -55,6 +46,6 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
           Ask on WhatsApp
         </a>
       </div>
-    </motion.div>
+    </div>
   );
 }

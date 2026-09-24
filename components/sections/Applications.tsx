@@ -4,7 +4,7 @@ import EquipmentImage from "@/components/ui/EquipmentImage";
 import type { CategorySlug } from "@/lib/products";
 
 const applications: { name: string; category: CategorySlug }[] = [
-  { name: "Concrete Work", category: "concrete-vibration" },
+  { name: "Concrete Work", category: "concrete-equipment" },
   { name: "Site Compaction", category: "compaction" },
   { name: "Material Lifting", category: "material-lifting" },
   { name: "Sand Screening", category: "screening" },

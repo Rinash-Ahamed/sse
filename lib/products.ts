@@ -32,7 +32,7 @@ export type Product = {
 };
 
 export type CategorySlug =
-  | "concrete-vibration"
+  | "concrete-equipment"
   | "compaction"
   | "material-lifting"
   | "screening"
@@ -49,10 +49,10 @@ export type Category = {
 
 export const categories: Category[] = [
   {
-    slug: "concrete-vibration",
-    name: "Concrete & Vibration",
+    slug: "concrete-equipment",
+    name: "Concrete Equipment",
     shortName: "Concrete",
-    description: "Mix concrete and remove trapped air during pours.",
+    description: "Mix concrete for site work.",
     number: "01",
   },
   {
@@ -80,7 +80,7 @@ export const categories: Category[] = [
     slug: "cutting",
     name: "Cutting",
     shortName: "Cutting",
-    description: "Cut paver blocks to fit the job.",
+    description: "Cut paver blocks and concrete surfaces for site and road work.",
     number: "05",
   },
   {
@@ -93,6 +93,20 @@ export const categories: Category[] = [
 ];
 
 export const products: Product[] = [
+  {
+    id: "single-wheel-barrow",
+    images: ["/images/products/19.png"],
+    slug: "single-wheel-barrow",
+    name: "Single Wheel Barrow",
+    category: "site-equipment",
+    shortDescription: "Move sand, aggregate and supplies around the site.",
+    description: "A single wheel barrow for moving loose materials and supplies across a job site.",
+    priceStatus: "contact-for-latest-price",
+    applications: ["General Construction", "Material Handling"],
+    seoTitle: "Single Wheel Barrow in Coimbatore | Shree Sanjay Equipments",
+    seoDescription:
+      "Single wheel barrow available from Shree Sanjay Equipments, Coimbatore. Contact for latest price and details.",
+  },
   {
     id: "forward-plate-compactor",
     images: ["/images/products/10.png"],
@@ -146,7 +160,7 @@ export const products: Product[] = [
     images: ["/images/products/12.png"],
     slug: "electric-concrete-mixer",
     name: "Electric Concrete Mixer",
-    category: "concrete-vibration",
+    category: "concrete-equipment",
     shortDescription: "Mix concrete at the job site before a pour.",
     description:
       "Prepare concrete on site with an electric mixer. Contact us for current capacity, motor details and availability.",
@@ -191,18 +205,34 @@ export const products: Product[] = [
       "Construction lift available from Shree Sanjay Equipments, Coimbatore. Contact for latest price and details.",
   },
   {
-    id: "concrete-vibrator",
-    slug: "concrete-vibrator",
-    name: "Concrete Vibrator",
-    category: "concrete-vibration",
-    shortDescription: "Remove trapped air from freshly poured concrete.",
+    id: "semi-automatic-concrete-cutter",
+    images: ["/images/products/17.png"],
+    slug: "semi-automatic-concrete-cutter",
+    name: "Semi-Automatic Concrete Cutter",
+    category: "cutting",
+    shortDescription: "Cut concrete surfaces for construction and repair work.",
     description:
-      "Use a concrete vibrator during a pour to remove trapped air and help concrete settle around reinforcement. Ask us for model details.",
+      "A semi-automatic concrete cutter for cutting concrete surfaces on site. Contact us for current model details, availability and pricing.",
     priceStatus: "contact-for-latest-price",
-    applications: ["Concrete Work", "Foundation & Slab Work"],
-    seoTitle: "Concrete Vibrator in Coimbatore | Shree Sanjay Equipments",
+    applications: ["Concrete Cutting", "Site Repairs"],
+    seoTitle: "Semi-Automatic Concrete Cutter in Coimbatore | Shree Sanjay Equipments",
     seoDescription:
-      "Concrete vibrator available from Shree Sanjay Equipments, Coimbatore. Contact for latest price and details.",
+      "Semi-automatic concrete cutter available from Shree Sanjay Equipments, Coimbatore. Enquire about current models and pricing.",
+  },
+  {
+    id: "concrete-road-cutter",
+    images: ["/images/products/18.png"],
+    slug: "concrete-road-cutter",
+    name: "Concrete Road Cutter",
+    category: "cutting",
+    shortDescription: "Cut concrete road surfaces for construction and repair work.",
+    description:
+      "A concrete road cutter for making cuts in road surfaces during construction or repair work. Ask us about available models and specifications.",
+    priceStatus: "contact-for-latest-price",
+    applications: ["Road Cutting", "Concrete Surface Work"],
+    seoTitle: "Concrete Road Cutter in Coimbatore | Shree Sanjay Equipments",
+    seoDescription:
+      "Concrete road cutter available from Shree Sanjay Equipments, Coimbatore. Contact us for current price and specifications.",
   },
   {
     id: "paver-block-cutting-machine",
@@ -218,19 +248,6 @@ export const products: Product[] = [
     seoTitle: "Paver Block Cutting Machine in Coimbatore | Shree Sanjay Equipments",
     seoDescription:
       "Paver block cutting machine available from Shree Sanjay Equipments, Coimbatore. Contact for latest price and details.",
-  },
-  {
-    id: "single-wheel-barrow",
-    slug: "single-wheel-barrow",
-    name: "Single Wheel Barrow",
-    category: "site-equipment",
-    shortDescription: "Move sand, aggregate and supplies around the site.",
-    description: "A single wheel barrow for moving loose materials and supplies across a job site.",
-    priceStatus: "contact-for-latest-price",
-    applications: ["General Construction", "Material Handling"],
-    seoTitle: "Single Wheel Barrow in Coimbatore | Shree Sanjay Equipments",
-    seoDescription:
-      "Single wheel barrow available from Shree Sanjay Equipments, Coimbatore. Contact for latest price and details.",
   },
 ];
 
