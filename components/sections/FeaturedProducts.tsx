@@ -13,7 +13,7 @@ export default function FeaturedProducts() {
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-20 md:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <SectionLabel number="03">Featured Equipment</SectionLabel>
+            <SectionLabel>Featured Equipment</SectionLabel>
             <RevealHeading
               as="h2"
               className="mt-4 font-heading font-extrabold text-3xl md:text-5xl tracking-tight"

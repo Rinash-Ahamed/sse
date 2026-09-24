@@ -8,7 +8,7 @@ export default function AboutTeaser() {
     <section className="border-t border-line bg-surface/50">
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-20 md:py-28 grid grid-cols-1 md:grid-cols-12 gap-10">
         <div className="md:col-span-5">
-          <SectionLabel number="06">About</SectionLabel>
+          <SectionLabel>About</SectionLabel>
           <RevealHeading
             as="h2"
             className="mt-4 font-heading font-extrabold text-3xl md:text-4xl tracking-tight leading-[1.1]"

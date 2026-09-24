@@ -59,7 +59,7 @@ export default function MachineStory() {
   return (
     <section className="border-t border-line">
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-20 md:py-28">
-        <SectionLabel number="04">Built For The Site</SectionLabel>
+        <SectionLabel>Built For The Site</SectionLabel>
 
         {/* Desktop: sticky image + scrolling blocks */}
         <div className="mt-10 hidden md:grid grid-cols-12 gap-10">

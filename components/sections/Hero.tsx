@@ -143,7 +143,6 @@ export default function Hero() {
                 <span aria-hidden="true" className={`h-1.5 rounded-full transition-all duration-300 ${headlineIndex === index ? "w-8 bg-accent" : "w-5 bg-ink/25 group-hover:bg-ink/50"}`} />
               </button>
             ))}
-            <span className="label-mono ml-3 text-[10px] text-ink-muted">0{headlineIndex + 1} / 0{headlines.length}</span>
           </div>
         </div>
       </div>

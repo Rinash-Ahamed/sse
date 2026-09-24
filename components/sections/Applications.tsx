@@ -16,7 +16,7 @@ export default function Applications() {
   return (
     <section id="applications" className="border-t border-line scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-20 md:py-28">
-        <SectionLabel number="05">Applications</SectionLabel>
+        <SectionLabel>Applications</SectionLabel>
         <RevealHeading as="h2" className="mt-4 font-heading font-extrabold text-3xl md:text-5xl tracking-tight">
           Where the equipment gets to work
         </RevealHeading>
