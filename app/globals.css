@@ -2,13 +2,14 @@
 
 :root {
   --color-paper: #f6f4ef;
-  --color-surface: #e9e8e4;
+  --color-surface: #ffffff;
   --color-ink: #202427;
-  --color-ink-muted: #4b5156;
-  --color-line: #d5d3ce;
+  --color-ink-muted: #6b7074;
+  --color-line: #dededa;
   --color-accent: #b00018;
   --color-accent-strong: #7d0012;
   --color-steel: #4b5156;
+  --color-dark-section: #181b1d;
 
   --font-heading: var(--font-manrope);
   --font-body: var(--font-inter);
@@ -24,6 +25,7 @@
   --color-accent: var(--color-accent);
   --color-accent-strong: var(--color-accent-strong);
   --color-steel: var(--color-steel);
+  --color-dark-section: var(--color-dark-section);
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
   --font-mono-label: var(--font-mono-label);

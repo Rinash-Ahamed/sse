@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export function RevealHeading({
@@ -52,10 +52,11 @@ export function FadeUp({
 }
 
 export function LineReveal({ className }: { className?: string }) {
+  const reducedMotion = useReducedMotion();
   return (
     <motion.div
-      initial={{ scaleX: 0 }}
-      whileInView={{ scaleX: 1 }}
+      initial={reducedMotion ? false : { scaleX: 0 }}
+      whileInView={reducedMotion ? undefined : { scaleX: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       style={{ transformOrigin: "left" }}

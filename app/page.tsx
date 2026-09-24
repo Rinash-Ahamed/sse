@@ -2,6 +2,7 @@ import Hero from "@/components/sections/Hero";
 import CapabilityStrip from "@/components/sections/CapabilityStrip";
 import CategoryGrid from "@/components/sections/CategoryGrid";
 import FeaturedProducts from "@/components/sections/FeaturedProducts";
+import CinematicBreak from "@/components/sections/CinematicBreak";
 import MachineStory from "@/components/sections/MachineStory";
 import Applications from "@/components/sections/Applications";
 import EnquiryCTA from "@/components/sections/EnquiryCTA";
@@ -13,8 +14,9 @@ export default function Home() {
     <>
       <Hero />
       <CapabilityStrip />
-      <CategoryGrid />
       <FeaturedProducts />
+      <CinematicBreak />
+      <CategoryGrid />
       <Services />
       <MachineStory />
       <Applications />
