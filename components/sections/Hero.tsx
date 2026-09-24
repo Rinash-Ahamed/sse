@@ -14,10 +14,87 @@ const headlines = [
   { lead: "Ready for the", accent: "work ahead." },
 ];
 
+type NetworkConnection = EventTarget & {
+  saveData?: boolean;
+  effectiveType?: string;
+  downlink?: number;
+};
+
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
-  const sceneRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const lensRef = useRef<HTMLDivElement>(null);
+  const lensCanvasRef = useRef<HTMLCanvasElement>(null);
   const [headlineIndex, setHeadlineIndex] = useState(0);
+  const [canPlayVideo, setCanPlayVideo] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedData = window.matchMedia("(prefers-reduced-data: reduce)");
+    const device = navigator as Navigator & { deviceMemory?: number; connection?: NetworkConnection };
+    const connection = device.connection;
+
+    const updateVideoEligibility = () => {
+      const slowConnection = connection?.saveData
+        || ["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "")
+        || (connection?.downlink !== undefined && connection.downlink < 2.5);
+      const lowerEndDevice = (device.deviceMemory !== undefined && device.deviceMemory < 4)
+        || (device.hardwareConcurrency !== undefined && device.hardwareConcurrency <= 2);
+      const eligible = desktop.matches && !reducedMotion.matches && !reducedData.matches
+        && !slowConnection && !lowerEndDevice && navigator.onLine;
+      setCanPlayVideo(eligible);
+      if (!eligible) setVideoPlaying(false);
+    };
+
+    updateVideoEligibility();
+    desktop.addEventListener("change", updateVideoEligibility);
+    reducedMotion.addEventListener("change", updateVideoEligibility);
+    reducedData.addEventListener("change", updateVideoEligibility);
+    connection?.addEventListener("change", updateVideoEligibility);
+    window.addEventListener("online", updateVideoEligibility);
+    window.addEventListener("offline", updateVideoEligibility);
+    return () => {
+      desktop.removeEventListener("change", updateVideoEligibility);
+      reducedMotion.removeEventListener("change", updateVideoEligibility);
+      reducedData.removeEventListener("change", updateVideoEligibility);
+      connection?.removeEventListener("change", updateVideoEligibility);
+      window.removeEventListener("online", updateVideoEligibility);
+      window.removeEventListener("offline", updateVideoEligibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    const video = videoRef.current;
+    if (!canPlayVideo || !hero || !video) return;
+
+    let inView = true;
+    const syncPlayback = () => {
+      if (inView && document.visibilityState === "visible") {
+        void video.play().catch((error: unknown) => {
+          // React's development effect cleanup and ordinary visibility changes can cancel play().
+          // Those AbortErrors should not permanently disable the video.
+          if (error instanceof DOMException && error.name === "AbortError") return;
+          setCanPlayVideo(false);
+        });
+      } else {
+        video.pause();
+      }
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      syncPlayback();
+    });
+    observer.observe(hero);
+    document.addEventListener("visibilitychange", syncPlayback);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", syncPlayback);
+      video.pause();
+    };
+  }, [canPlayVideo]);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -38,76 +115,105 @@ export default function Hero() {
 
   useEffect(() => {
     const hero = heroRef.current;
-    const scene = sceneRef.current;
-    if (!hero || !scene) return;
+    const video = videoRef.current;
+    const lens = lensRef.current;
+    const canvas = lensCanvasRef.current;
+    const context = canvas?.getContext("2d");
+    if (!videoPlaying || !hero || !video || !lens || !canvas || !context) return;
 
-    const finePointer = window.matchMedia("(pointer: fine)");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const lensSize = 210;
+    const viewportSize = 192;
+    const zoom = 1.4;
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(viewportSize * pixelRatio);
+    canvas.height = Math.round(viewportSize * pixelRatio);
+    context.imageSmoothingQuality = "high";
+
     let frame = 0;
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let hovering = false;
+    let lastPaint = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+    let heroRect = hero.getBoundingClientRect();
 
-    const reset = () => {
-      hovering = false;
-      targetX = 0;
-      targetY = 0;
-      currentX = 0;
-      currentY = 0;
+    const paint = (time: number) => {
+      if (time - lastPaint >= 32 && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && video.videoWidth) {
+        const scale = Math.max(heroRect.width / video.videoWidth, heroRect.height / video.videoHeight);
+        const offsetX = (heroRect.width - video.videoWidth * scale) / 2;
+        const offsetY = (heroRect.height - video.videoHeight * scale) / 2;
+        const sampleSize = viewportSize / zoom / scale;
+        const sourceX = Math.min(video.videoWidth - sampleSize, Math.max(0, (pointerX - offsetX) / scale - sampleSize / 2));
+        const sourceY = Math.min(video.videoHeight - sampleSize, Math.max(0, (pointerY - offsetY) / scale - sampleSize / 2));
+        context.drawImage(video, sourceX, sourceY, sampleSize, sampleSize, 0, 0, canvas.width, canvas.height);
+        lens.style.opacity = "1";
+        lastPaint = time;
+      }
+      frame = requestAnimationFrame(paint);
+    };
+
+    const hide = () => {
+      lens.style.opacity = "0";
       cancelAnimationFrame(frame);
       frame = 0;
-      scene.style.transform = "";
+      lastPaint = 0;
     };
 
-    const animate = () => {
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
-      scene.style.transform = `translate3d(${currentX * 8}px, ${currentY * 6}px, 0) rotateX(${-currentY}deg) rotateY(${currentX * 1.3}deg)`;
-      frame = requestAnimationFrame(animate);
-    };
-
-    const canAnimate = () => finePointer.matches && !reducedMotion.matches;
-    const onEnter = (event: PointerEvent) => {
-      if (!canAnimate() || event.pointerType !== "mouse") return;
-      hovering = true;
-      if (!frame) frame = requestAnimationFrame(animate);
-    };
     const onMove = (event: PointerEvent) => {
-      if (!canAnimate() || event.pointerType !== "mouse") return;
-      if (!hovering) onEnter(event);
-      const rect = hero.getBoundingClientRect();
-      const x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const y = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
-      targetX = (x - 0.5) * 2;
-      targetY = (y - 0.5) * 2;
-    };
-    const onMediaChange = () => { if (!canAnimate()) reset(); };
+      heroRect = hero.getBoundingClientRect();
+      pointerX = event.clientX - heroRect.left;
+      pointerY = event.clientY - heroRect.top;
+      if (event.pointerType !== "mouse" || pointerX < heroRect.width * 0.54) {
+        hide();
+        return;
+      }
 
-    hero.addEventListener("pointerenter", onEnter);
-    hero.addEventListener("pointermove", onMove);
-    hero.addEventListener("pointerleave", reset);
-    finePointer.addEventListener("change", onMediaChange);
-    reducedMotion.addEventListener("change", onMediaChange);
-    return () => {
-      reset();
-      hero.removeEventListener("pointerenter", onEnter);
-      hero.removeEventListener("pointermove", onMove);
-      hero.removeEventListener("pointerleave", reset);
-      finePointer.removeEventListener("change", onMediaChange);
-      reducedMotion.removeEventListener("change", onMediaChange);
+      const lensX = Math.min(heroRect.width - lensSize / 2 - 16, Math.max(lensSize / 2 + 16, pointerX));
+      const lensY = Math.min(heroRect.height - lensSize / 2 - 16, Math.max(lensSize / 2 + 16, pointerY));
+      lens.style.transform = `translate3d(${lensX - lensSize / 2}px, ${lensY - lensSize / 2}px, 0)`;
+      if (!frame) frame = requestAnimationFrame(paint);
     };
-  }, []);
+
+    hero.addEventListener("pointermove", onMove);
+    hero.addEventListener("pointerleave", hide);
+    window.addEventListener("blur", hide);
+    return () => {
+      hide();
+      hero.removeEventListener("pointermove", onMove);
+      hero.removeEventListener("pointerleave", hide);
+      window.removeEventListener("blur", hide);
+    };
+  }, [videoPlaying]);
 
   return (
     <section ref={heroRef} className="relative isolate flex min-h-[620px] items-center overflow-hidden border-b border-line bg-paper sm:min-h-[660px] xl:min-h-[720px]">
       <div aria-hidden="true" className={styles.visual}>
-        <div ref={sceneRef} className={styles.scene}>
+        <div className={styles.scene}>
           <Image src="/images/hero/sse-hero.png" alt="" fill priority sizes="100vw" draggable={false} className={styles.image} />
+          {canPlayVideo && (
+            <video
+              ref={videoRef}
+              className={`${styles.video} ${videoPlaying ? styles.videoVisible : ""}`}
+              src="/images/hero/hero-video.mp4"
+              muted
+              autoPlay
+              loop
+              playsInline
+              preload="auto"
+              poster="/images/hero/sse-hero.png"
+              onPlaying={() => setVideoPlaying(true)}
+              onError={() => { setVideoPlaying(false); setCanPlayVideo(false); }}
+              onPause={() => setVideoPlaying(false)}
+            />
+          )}
         </div>
       </div>
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-paper/95 via-paper/55 to-transparent" />
+      {videoPlaying && (
+        <div ref={lensRef} className={styles.lens} aria-hidden="true">
+          <canvas ref={lensCanvasRef} className={styles.lensCanvas} />
+          <span className={styles.lensFocus} />
+          <span className={styles.lensAccent} />
+        </div>
+      )}
       <div className="relative z-30 mx-auto w-full max-w-7xl px-5 pb-16 pt-28 sm:pb-20 sm:pt-32 md:px-8 md:py-24">
         <div className="max-w-xl">
           <p className="label-mono mb-6 text-[10px] text-ink-muted before:mb-4 before:block before:h-px before:w-8 before:bg-accent sm:text-[11px]">
