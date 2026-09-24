@@ -123,7 +123,7 @@ export default function Hero() {
 
     const lensSize = 210;
     const viewportSize = 192;
-    const zoom = 1.4;
+    const zoom = 1.2;
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(viewportSize * pixelRatio);
     canvas.height = Math.round(viewportSize * pixelRatio);
@@ -137,12 +137,15 @@ export default function Hero() {
 
     const paint = (time: number) => {
       if (time - lastPaint >= 32 && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && video.videoWidth) {
-        const scale = Math.max(heroRect.width / video.videoWidth, heroRect.height / video.videoHeight);
-        const offsetX = (heroRect.width - video.videoWidth * scale) / 2;
-        const offsetY = (heroRect.height - video.videoHeight * scale) / 2;
+        const videoRect = video.getBoundingClientRect();
+        const scale = Math.max(videoRect.width / video.videoWidth, videoRect.height / video.videoHeight);
+        const offsetX = (videoRect.width - video.videoWidth * scale) / 2;
+        const offsetY = (videoRect.height - video.videoHeight * scale) / 2;
+        const videoX = heroRect.left + pointerX - videoRect.left;
+        const videoY = heroRect.top + pointerY - videoRect.top;
         const sampleSize = viewportSize / zoom / scale;
-        const sourceX = Math.min(video.videoWidth - sampleSize, Math.max(0, (pointerX - offsetX) / scale - sampleSize / 2));
-        const sourceY = Math.min(video.videoHeight - sampleSize, Math.max(0, (pointerY - offsetY) / scale - sampleSize / 2));
+        const sourceX = Math.min(video.videoWidth - sampleSize, Math.max(0, (videoX - offsetX) / scale - sampleSize / 2));
+        const sourceY = Math.min(video.videoHeight - sampleSize, Math.max(0, (videoY - offsetY) / scale - sampleSize / 2));
         context.drawImage(video, sourceX, sourceY, sampleSize, sampleSize, 0, 0, canvas.width, canvas.height);
         lens.style.opacity = "1";
         lastPaint = time;
@@ -161,7 +164,9 @@ export default function Hero() {
       heroRect = hero.getBoundingClientRect();
       pointerX = event.clientX - heroRect.left;
       pointerY = event.clientY - heroRect.top;
-      if (event.pointerType !== "mouse" || pointerX < heroRect.width * 0.54) {
+      const videoRect = video.getBoundingClientRect();
+      const visibleVideoStart = videoRect.left - heroRect.left + videoRect.width * 0.22;
+      if (event.pointerType !== "mouse" || pointerX < Math.max(heroRect.width * 0.54, visibleVideoStart)) {
         hide();
         return;
       }

@@ -19,11 +19,15 @@
 
 .video {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(100%, 1280px);
   height: 100%;
   object-fit: cover;
   object-position: center;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 22%);
+  mask-image: linear-gradient(to right, transparent, #000 22%);
   opacity: 0;
   transition: opacity 350ms ease;
 }
