@@ -28,8 +28,8 @@ export default function EnquiryCTA() {
           Tell us what the job requires.
         </h2>
         <p className="mt-5 text-paper/70 text-[15px] md:text-base max-w-lg mx-auto leading-relaxed">
-          Share your requirement and we&apos;ll help you identify the
-          suitable equipment.
+          Tell us the work you are planning or the machine you need serviced.
+          We can discuss equipment, availability and next steps.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
           <a

@@ -7,12 +7,12 @@ const services = [
   {
     title: "Equipment Repairs",
     icon: Wrench,
-    description: "Having trouble with your equipment? Share the machine details and the issue with our team to discuss repair options.",
+    description: "Tell us the machine, model and problem. We can discuss the repair support available.",
   },
   {
     title: "Equipment Servicing",
     icon: Settings2,
-    description: "Keep equipment maintenance on your schedule. Contact us with your machine details to discuss servicing requirements and availability.",
+    description: "Share the machine and the service it needs so we can discuss available maintenance support.",
   },
 ];
 
@@ -23,11 +23,11 @@ export default function Services() {
         <SectionLabel>Repair &amp; Servicing</SectionLabel>
         <div className="mt-4 grid gap-6 md:grid-cols-2 md:gap-12">
           <h2 className="font-heading text-3xl font-extrabold tracking-tight md:text-5xl">
-            Support beyond the sale.
+            Help when your machine needs attention.
           </h2>
           <p className="text-[15px] leading-relaxed text-ink-muted md:text-base">
-            Shree Sanjay Equipments also provides equipment repair and servicing
-            in Coimbatore. Tell us what you use and what support you need.
+            We take repair and servicing enquiries for construction equipment
+            in Coimbatore. Tell us what machine you have and what it needs.
           </p>
         </div>
         <div className="mt-10 grid gap-5 md:grid-cols-2">

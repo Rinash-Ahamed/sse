@@ -6,7 +6,7 @@ export default function ContactPreview() {
   return (
     <section className="border-t border-line">
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-20 md:py-24">
-        <SectionLabel number="07">Visit or Reach Us</SectionLabel>
+        <SectionLabel number="07">Visit or contact us</SectionLabel>
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
           <div>
             <MapPin className="h-5 w-5 text-accent" />

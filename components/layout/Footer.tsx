@@ -37,7 +37,7 @@ export default function Footer() {
               <Image src="/images/brand/logo-full.png" alt="Shree Sanjay Equipments" width={300} height={216} className="h-auto w-48" />
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/65">
-              Construction equipment, repairs and servicing for the work happening around Coimbatore.
+              Construction equipment, repairs and servicing in Coimbatore.
             </p>
           </div>
 
@@ -46,8 +46,7 @@ export default function Footer() {
             <nav aria-label="Footer navigation" className="flex flex-col gap-3">
               <Link href="/products" className={footerLink}>Products</Link>
               <Link href="/#services" className={footerLink}>Repairs &amp; Servicing</Link>
-              <Link href="/about" className={footerLink}>Our Story</Link>
-              <Link href="/#applications" className={footerLink}>Applications</Link>
+              <Link href="/about" className={footerLink}>About Us</Link>
               <Link href="/contact" className={footerLink}>Contact</Link>
             </nav>
           </div>

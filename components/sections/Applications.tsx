@@ -18,7 +18,7 @@ export default function Applications() {
       <div className="mx-auto max-w-7xl px-5 md:px-8 py-20 md:py-28">
         <SectionLabel number="05">Applications</SectionLabel>
         <RevealHeading as="h2" className="mt-4 font-heading font-extrabold text-3xl md:text-5xl tracking-tight">
-          Made for the Site
+          Where the equipment gets to work
         </RevealHeading>
 
         <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">

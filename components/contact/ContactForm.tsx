@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { contactSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
+import { generalWhatsAppLink } from "@/lib/whatsapp";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -70,8 +71,8 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <div className="border border-line p-8 text-center">
-        <p className="font-heading font-semibold text-lg">Thank you. Your enquiry has been sent.</p>
-        <p className="mt-2 text-sm text-ink-muted">Our team will contact you shortly.</p>
+        <p className="font-heading font-semibold text-lg">Your enquiry has been sent.</p>
+        <p className="mt-2 text-sm text-ink-muted">We&apos;ll reply using the contact details you provided.</p>
         <button
           onClick={() => setStatus("idle")}
           className="mt-6 text-[13px] font-medium border-b border-ink pb-0.5"
@@ -133,7 +134,7 @@ export default function ContactForm() {
       </div>
 
       <Field
-        label="Equipment / Service Required"
+          label="Equipment or service needed"
         value={values.product}
         error={errors.product}
         onChange={(v) => update("product", v)}
@@ -146,7 +147,7 @@ export default function ContactForm() {
         <textarea
           id="message"
           rows={5}
-          placeholder="Tell us which equipment you need, or describe the machine and its repair or servicing requirement."
+          placeholder="Tell us what equipment you need, or describe the machine that needs repair or servicing."
           value={values.message}
           onChange={(e) => update("message", e.target.value)}
           className={cn(
@@ -158,7 +159,13 @@ export default function ContactForm() {
       </div>
 
       {serverError && (
-        <p className="text-sm text-red-600">{serverError}</p>
+        <div role="alert" className="text-sm text-red-700">
+          <p>{serverError}</p>
+          <div className="mt-2 flex flex-wrap gap-x-5 gap-y-2">
+            <a href="tel:+919842230721" className="underline underline-offset-2">Call +91 98422 30721</a>
+            <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Message us on WhatsApp</a>
+          </div>
+        </div>
       )}
 
       <button

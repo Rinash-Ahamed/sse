@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Menu, X, Phone, ArrowUpRight, ArrowRight, Home, Package, Building2, Wrench, HardHat, Mail, MessageCircle } from "lucide-react";
+import { Menu, X, Phone, ArrowUpRight, ArrowRight, Home, Package, Building2, Wrench, Mail, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { generalWhatsAppLink } from "@/lib/whatsapp";
 
@@ -13,7 +13,6 @@ const links = [
   { href: "/products", label: "Products", icon: Package, description: "Find equipment for your next project" },
   { href: "/about", label: "About", icon: Building2, description: "Get to know our team" },
   { href: "/#services", label: "Services", icon: Wrench, description: "Equipment repairs and servicing" },
-  { href: "/#applications", label: "Applications", icon: HardHat, description: "Equipment for every stage of site work" },
   { href: "/contact", label: "Contact", icon: Mail, description: "Talk to us about your requirements" },
 ];
 const focusStyle = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent";
@@ -49,7 +48,7 @@ export default function Navbar() {
 
   function isActive(href: string) {
     if (href.includes("#")) return pathname === "/" && hash === href.slice(1);
-    if (href === "/") return pathname === "/" && !["#services", "#applications"].includes(hash);
+    if (href === "/") return pathname === "/" && hash !== "#services";
     return pathname === href || pathname.startsWith(href + "/");
   }
 
@@ -76,25 +75,24 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="sticky top-3 z-50 mx-3 rounded-2xl border border-white/80 bg-paper/88 shadow-[0_12px_40px_rgba(32,36,39,0.13)] backdrop-blur-2xl xl:mx-auto xl:max-w-[calc(100%-48px)]">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-3 px-4 sm:h-20 sm:px-6 lg:px-8">
+    <header className={cn("sticky top-3 z-50 mx-3 rounded-2xl border border-white/80 bg-paper/88 shadow-[0_12px_40px_rgba(32,36,39,0.13)] backdrop-blur-2xl xl:mx-4", pathname === "/" && "-mb-18 sm:-mb-20")}>
+      <div className="mx-auto flex h-18 max-w-[1600px] items-center justify-between gap-4 px-4 sm:h-20 sm:px-6 lg:px-8 xl:px-10">
         <Brand />
-        <nav aria-label="Main navigation" className="hidden items-center gap-1 xl:flex">
+        <nav aria-label="Main navigation" className="hidden items-center gap-2 rounded-full border border-line/70 bg-white/55 p-1 xl:flex">
           {links.map(({ href, label }) => (
             <Link key={href} href={href} onClick={(event) => {
               if (href === "/" || href.includes("#")) {
                 event.preventDefault();
                 window.location.assign(href);
               }
-            }} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("group relative inline-flex min-h-11 items-center px-3 text-[13px] font-semibold transition-colors hover:text-accent", focusStyle, isActive(href) ? "text-accent" : "text-ink-muted")}>
+            }} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("inline-flex min-h-10 items-center rounded-full px-5 text-[13px] font-semibold transition-colors hover:text-accent", focusStyle, isActive(href) ? "bg-paper text-accent shadow-sm" : "text-ink-muted")}>
               {label}
-              <span aria-hidden="true" className={cn("absolute bottom-1 left-3 right-3 h-[2px] origin-left rounded-full bg-accent transition-transform duration-300", isActive(href) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100")} />
             </Link>
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <a href="tel:+919842230721" aria-label="Call Shree Sanjay Equipments" className={cn("inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-accent transition-colors hover:bg-surface sm:hidden", focusStyle)}><Phone className="h-[18px] w-[18px]" aria-hidden="true" /></a>
-          <Link href="/contact#enquiry" className={cn("hidden min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-[13px] font-semibold text-white shadow-[0_7px_18px_rgba(176,0,24,0.2)] transition-all hover:-translate-y-0.5 hover:bg-accent-strong sm:inline-flex", focusStyle)}>Get a Quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
+          <Link href="/contact#enquiry" className={cn("hidden min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-[13px] font-semibold text-white shadow-[0_7px_18px_rgba(176,0,24,0.2)] transition-all hover:-translate-y-0.5 hover:bg-accent-strong xl:inline-flex", focusStyle)}>Get a Quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
           <button ref={toggleRef} type="button" className={cn("inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-xl bg-ink px-3 text-sm font-medium text-white transition-colors hover:bg-accent xl:hidden", focusStyle)} onClick={() => setOpen(true)} aria-label="Open navigation menu" aria-haspopup="dialog" aria-expanded={open} aria-controls="mobile-navigation">
             <Menu className="h-5 w-5" aria-hidden="true" /><span className="hidden sm:inline">Menu</span>
           </button>

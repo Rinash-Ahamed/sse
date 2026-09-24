@@ -11,19 +11,19 @@ const blocks: { number: string; title: string; body: string; category: CategoryS
   {
     number: "01",
     title: "Compaction",
-    body: "Designed for demanding site work.",
+    body: "Prepare soil and base layers for the next stage of construction.",
     category: "compaction",
   },
   {
     number: "02",
     title: "Material Handling",
-    body: "Equipment for moving material efficiently.",
+    body: "Move construction materials between levels on site.",
     category: "material-lifting",
   },
   {
     number: "03",
     title: "Screening",
-    body: "Practical site equipment for material preparation.",
+    body: "Separate sand and prepare material before it goes to work.",
     category: "screening",
   },
 ];

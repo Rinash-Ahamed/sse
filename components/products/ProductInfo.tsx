@@ -52,14 +52,14 @@ export default function ProductInfo({ product }: { product: Product }) {
           className="inline-flex items-center justify-center gap-2 rounded-md bg-accent hover:bg-accent-strong text-white px-6 py-3.5 text-[13px] font-medium transition-transform hover:-translate-y-0.5"
         >
           <MessageCircle className="h-4 w-4" />
-          Get Latest Price on WhatsApp
+          Ask for price on WhatsApp
         </a>
         <Link
           href="/contact"
           className="inline-flex items-center justify-center gap-2 rounded-md border border-steel/50 hover:bg-surface px-6 py-3.5 text-[13px] font-medium transition-transform hover:-translate-y-0.5"
         >
           <Mail className="h-4 w-4" />
-          Send Enquiry
+          Send an enquiry
         </Link>
       </div>
 

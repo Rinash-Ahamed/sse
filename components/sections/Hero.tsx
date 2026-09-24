@@ -1,15 +1,40 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { generalWhatsAppLink } from "@/lib/whatsapp";
 import styles from "./Hero.module.css";
 
+const headlines = [
+  { lead: "Built for every", accent: "job site." },
+  { lead: "Equipment for", accent: "real work." },
+  { lead: "From pour to", accent: "final lift." },
+  { lead: "Ready for the", accent: "work ahead." },
+];
+
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const sceneRef = useRef<HTMLDivElement>(null);
+  const [headlineIndex, setHeadlineIndex] = useState(0);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let timer: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      clearTimeout(timer);
+      if (!reducedMotion.matches) {
+        timer = setTimeout(() => setHeadlineIndex((index) => (index + 1) % headlines.length), 5200);
+      }
+    };
+    schedule();
+    reducedMotion.addEventListener("change", schedule);
+    return () => {
+      clearTimeout(timer);
+      reducedMotion.removeEventListener("change", schedule);
+    };
+  }, [headlineIndex]);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -83,13 +108,16 @@ export default function Hero() {
         </div>
       </div>
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-paper/95 via-paper/55 to-transparent" />
-      <div className="relative z-30 mx-auto w-full max-w-7xl px-5 py-20 md:px-8 md:py-24">
+      <div className="relative z-30 mx-auto w-full max-w-7xl px-5 pb-16 pt-28 sm:pb-20 sm:pt-32 md:px-8 md:py-24">
         <div className="max-w-xl">
           <p className="label-mono mb-6 text-[10px] text-ink-muted before:mb-4 before:block before:h-px before:w-8 before:bg-accent sm:text-[11px]">
             Construction Equipment &middot; Coimbatore
           </p>
-          <h1 className="font-heading text-[2.6rem] font-extrabold leading-[1.04] tracking-tight sm:text-6xl xl:text-7xl">
-            Built for every<br /><span className="text-accent">job site.</span>
+          <h1 className="min-h-[2.08em] font-heading text-[2.6rem] font-extrabold leading-[1.04] tracking-tight sm:text-6xl xl:text-7xl">
+            <span key={headlineIndex} className={styles.headlineFrame}>
+              {headlines[headlineIndex].lead}
+              <span className={styles.headlineAccent}>{headlines[headlineIndex].accent}</span>
+            </span>
           </h1>
           <p className="mt-6 max-w-md text-[15px] leading-relaxed text-ink-muted md:text-lg">
             Construction equipment, repairs and servicing from Shree Sanjay Equipments, Coimbatore.
@@ -101,6 +129,21 @@ export default function Hero() {
             <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="relative inline-flex min-h-12 pointer-events-auto items-center gap-2 rounded-md bg-ink px-6 py-3.5 text-[13px] font-medium text-white shadow-[0_4px_14px_rgba(32,36,39,0.18)] transition-colors hover:bg-steel focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
               <MessageCircle className="h-5 w-5" aria-hidden="true" /> WhatsApp Enquiry
             </a>
+          </div>
+          <div className="relative z-40 mt-5 flex items-center gap-1" role="group" aria-label="Choose a hero headline">
+            {headlines.map((headline, index) => (
+              <button
+                key={headline.accent}
+                type="button"
+                onClick={() => setHeadlineIndex(index)}
+                aria-label={`Show headline ${index + 1}: ${headline.lead} ${headline.accent}`}
+                aria-pressed={headlineIndex === index}
+                className="group flex h-11 w-10 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+              >
+                <span aria-hidden="true" className={`h-1.5 rounded-full transition-all duration-300 ${headlineIndex === index ? "w-8 bg-accent" : "w-5 bg-ink/25 group-hover:bg-ink/50"}`} />
+              </button>
+            ))}
+            <span className="label-mono ml-3 text-[10px] text-ink-muted">0{headlineIndex + 1} / 0{headlines.length}</span>
           </div>
         </div>
       </div>

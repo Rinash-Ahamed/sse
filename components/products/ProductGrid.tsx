@@ -34,7 +34,7 @@ export default function ProductGrid({ initialCategory = "all" }: { initialCatego
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search equipment…"
+            placeholder="Search by equipment name"
             aria-label="Search equipment"
             className="w-full border-b border-line bg-transparent py-2.5 pl-7 text-sm outline-none placeholder:text-ink-muted focus:border-ink transition-colors"
           />
@@ -68,7 +68,7 @@ export default function ProductGrid({ initialCategory = "all" }: { initialCatego
           <p className="text-sm text-ink-muted">
             No equipment found.
             <br />
-            Try another product or category.
+            Try a different name or category.
           </p>
         </div>
       )}

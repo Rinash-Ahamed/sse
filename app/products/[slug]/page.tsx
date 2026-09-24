@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { getProductBySlug, products, priceLabel } from "@/lib/products";
+import { getProductBySlug, products } from "@/lib/products";
 import ProductGallery from "@/components/products/ProductGallery";
 import ProductInfo from "@/components/products/ProductInfo";
 import ProductCard from "@/components/products/ProductCard";
@@ -145,14 +145,13 @@ export default async function ProductDetailPage({
               Interested in the {product.name}?
             </p>
             <p className="mt-2 text-sm text-ink-muted">
-              {priceLabel(product)}. Reach out for full details and current
-              availability.
+              Ask us about current pricing, availability and model details.
             </p>
             <Link
               href="/contact"
               className="mt-5 inline-flex items-center gap-2 text-[13px] font-medium border-b border-ink pb-0.5"
             >
-              Send an Enquiry
+              Send an enquiry
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </section>

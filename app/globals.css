@@ -61,7 +61,8 @@ h1, h2, h3, h4, h5 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .category-reveal {
+  .category-reveal,
+  .capability-reveal {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;

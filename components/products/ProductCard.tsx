@@ -43,7 +43,7 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
           href={`/products/${product.slug}`}
           className="flex-1 flex items-center justify-center gap-1.5 py-3 text-[12.5px] font-medium hover:bg-surface transition-colors"
         >
-          View Details
+          View details
           <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
         </Link>
         <a
@@ -52,7 +52,7 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
           rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-1.5 py-3 text-[12.5px] font-medium border-l border-line text-accent hover:bg-surface transition-colors"
         >
-          WhatsApp
+          Ask on WhatsApp
         </a>
       </div>
     </motion.div>

@@ -1,12 +1,11 @@
 # Shree Sanjay Equipments: Website
 
-A premium product catalogue and enquiry website for **Shree Sanjay
+A product catalogue and enquiry website for **Shree Sanjay
 Equipments**, Coimbatore. Built with Next.js (App Router), TypeScript,
 Tailwind CSS v4, and Framer Motion.
 
-This is a discovery → enquiry site, not an ecommerce checkout: visitors
-browse equipment, view specifications, and reach out via WhatsApp, email
-or the contact form for current pricing.
+Visitors can browse equipment and contact the team by phone, WhatsApp,
+email or the enquiry form to ask about pricing, availability and services.
 
 ## Getting started
 
@@ -27,9 +26,8 @@ CONTACT_TO_EMAIL=sanjayequipments@gmail.com
 CONTACT_FROM_EMAIL=Website Enquiry <onboarding@resend.dev>
 ```
 
-Without `RESEND_API_KEY` set, the contact form still validates and
-responds successfully, but the enquiry is only logged to the server
-console instead of emailed: set the key before going live.
+Without `RESEND_API_KEY`, the contact form reports that it is unavailable
+and directs visitors to call or use WhatsApp. Set the key before going live.
 
 ## Project structure
 
@@ -72,20 +70,18 @@ than shown blank.
 
 ## Product photography
 
-No product photographs were supplied yet, so every product and category
-currently displays a restrained blueprint-style placeholder panel
-(labelled "Photograph to be added") instead of a stock photo. To add real
-photography:
+Product images live in `public/images/products/` and are connected through
+the `images` array in `lib/products.ts`. Products without an image show a
+simple placeholder. To add or replace photography:
 
 1. Drop optimized images into `public/images/products/`.
-2. Extend the `Product` type usage in `lib/products.ts` with an `images`
-   array pointing at those files.
-3. Swap `MachinePlaceholder` for a `next/image` render in
-   `components/products/ProductGallery.tsx` and `ProductCard.tsx`.
+2. Set that product's `images` array in `lib/products.ts` to the matching
+   public paths, such as `/images/products/example.png`.
+3. The product card and gallery will use those images automatically.
 
 ## Notes
 
-- Google Fonts (Manrope / Inter / JetBrains Mono) are loaded via
+- Google Fonts (Manrope / Inter) are loaded via
   `next/font/google` and are fetched at build time: this requires
   normal internet access (works out of the box on Vercel or any machine
   with unrestricted network access).

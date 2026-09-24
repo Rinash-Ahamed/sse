@@ -6,7 +6,7 @@ import SectionLabel from "@/components/ui/SectionLabel";
 export const metadata: Metadata = {
   title: "Equipment",
   description:
-    "Explore construction equipment, site machinery, compaction solutions and power tools from Shree Sanjay Equipments, Coimbatore.",
+    "Browse concrete, compaction, lifting, screening, cutting and site equipment from Shree Sanjay Equipments in Coimbatore.",
 };
 
 export default function ProductsPage() {
@@ -17,8 +17,8 @@ export default function ProductsPage() {
         Equipment
       </h1>
       <p className="mt-4 text-[15px] md:text-base text-ink-muted max-w-lg leading-relaxed">
-        Explore construction equipment, site machinery, compaction solutions
-        and power tools.
+        Browse equipment for concrete work, compaction, lifting, screening,
+        cutting and everyday site tasks. Ask us for current prices and availability.
       </p>
 
       <div className="mt-12">

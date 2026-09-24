@@ -22,6 +22,35 @@
   user-select: none;
 }
 
+.headlineFrame {
+  display: block;
+  animation: headlineEnter 550ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.headlineAccent {
+  display: block;
+  width: fit-content;
+  color: var(--color-accent);
+  animation: accentEnter 650ms cubic-bezier(.2, .8, .2, 1) 90ms both;
+}
+
+@keyframes headlineEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes accentEnter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headlineFrame,
+  .headlineAccent {
+    animation: none;
+  }
+}
+
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .scene {
     transform: none !important;

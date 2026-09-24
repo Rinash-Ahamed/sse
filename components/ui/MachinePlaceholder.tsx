@@ -65,7 +65,7 @@ export default function MachinePlaceholder({
         />
         {!dense && (
           <p className="label-mono text-[10px] text-ink-muted max-w-[220px]">
-            {label} · Photograph to be added
+            {label} · Image coming soon
           </p>
         )}
       </div>

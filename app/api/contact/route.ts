@@ -41,21 +41,24 @@ export async function POST(req: Request) {
   const fromEmail = process.env.CONTACT_FROM_EMAIL || "Website Enquiry <onboarding@resend.dev>";
 
   if (!apiKey) {
-    // No email provider configured yet. Log so the enquiry isn't silently lost during setup.
-    console.warn("RESEND_API_KEY not set. Enquiry received but not emailed:\n", text);
-    return NextResponse.json({ ok: true, warning: "Email not configured yet." });
+    console.error("RESEND_API_KEY not set. Enquiry form is unavailable.");
+    return NextResponse.json(
+      { ok: false, error: "The enquiry form is unavailable right now. Please call or WhatsApp us." },
+      { status: 503 },
+    );
   }
 
   try {
     const { Resend } = await import("resend");
     const resend = new Resend(apiKey);
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: fromEmail,
       to: toEmail,
       subject,
       text,
       replyTo: data.email || undefined,
     });
+    if (error) throw new Error(error.message);
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("Failed to send enquiry email", err);

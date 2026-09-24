@@ -22,8 +22,8 @@ export default function ContactPage() {
         Get in Touch
       </h1>
       <p className="mt-4 text-[15px] md:text-base text-ink-muted max-w-lg leading-relaxed">
-        Call, WhatsApp or send us your requirement. Our team will get back
-        to you with the latest pricing and details.
+        Call, WhatsApp or send us a message about equipment, repairs or
+        servicing. We can discuss current prices, availability and support.
       </p>
 
       <div className="mt-14 grid grid-cols-1 md:grid-cols-12 gap-12">
@@ -103,6 +103,10 @@ export default function ContactPage() {
         </div>
 
         <div id="enquiry" className="md:col-span-7 scroll-mt-24">
+          <h2 className="font-heading text-2xl font-bold tracking-tight">Send an enquiry</h2>
+          <p className="mb-7 mt-2 text-sm leading-relaxed text-ink-muted">
+            Tell us what equipment or service you need. Fields marked * are required.
+          </p>
           <ContactForm />
         </div>
       </div>

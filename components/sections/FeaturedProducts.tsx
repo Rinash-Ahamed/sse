@@ -18,7 +18,7 @@ export default function FeaturedProducts() {
               as="h2"
               className="mt-4 font-heading font-extrabold text-3xl md:text-5xl tracking-tight"
             >
-              Featured Equipment
+              Explore our equipment
             </RevealHeading>
           </div>
           <Link

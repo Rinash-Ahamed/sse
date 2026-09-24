@@ -52,42 +52,42 @@ export const categories: Category[] = [
     slug: "concrete-vibration",
     name: "Concrete & Vibration",
     shortName: "Concrete",
-    description: "Concrete mixing and vibration equipment for site-level pour work.",
+    description: "Mix concrete and remove trapped air during pours.",
     number: "01",
   },
   {
     slug: "compaction",
     name: "Compaction",
     shortName: "Compaction",
-    description: "Plate compactors and rammers built for demanding site work.",
+    description: "Compact soil and base layers before paving or building.",
     number: "02",
   },
   {
     slug: "material-lifting",
     name: "Material Lifting",
     shortName: "Lifting",
-    description: "Equipment for moving material and loads efficiently on site.",
+    description: "Lift building materials between levels on site.",
     number: "03",
   },
   {
     slug: "screening",
     name: "Screening",
     shortName: "Screening",
-    description: "Practical site equipment for material preparation.",
+    description: "Screen sand and prepare material for construction.",
     number: "04",
   },
   {
     slug: "cutting",
     name: "Cutting",
     shortName: "Cutting",
-    description: "Cutting equipment for paver blocks and surface work.",
+    description: "Cut paver blocks to fit the job.",
     number: "05",
   },
   {
     slug: "site-equipment",
     name: "Site Equipment",
     shortName: "Site Equipment",
-    description: "General site and material handling equipment.",
+    description: "Move materials and handle everyday site tasks.",
     number: "06",
   },
 ];
@@ -99,9 +99,9 @@ export const products: Product[] = [
     slug: "forward-plate-compactor",
     name: "Forward Plate Compactor",
     category: "compaction",
-    shortDescription: "Compaction equipment designed for demanding site work.",
+    shortDescription: "Compact soil, gravel and base layers before paving or building.",
     description:
-      "A forward plate compactor for compacting soil, gravel and asphalt on construction and road-work sites. Exact model specifications are available on request.",
+      "Use a forward plate compactor to prepare soil, gravel or paving base layers. Ask us for current model specifications and availability.",
     priceStatus: "contact-for-latest-price",
     applications: ["Site Compaction", "Road & Paver Base Preparation", "General Construction"],
     featured: true,
@@ -115,9 +115,9 @@ export const products: Product[] = [
     slug: "construction-monkey-hoist",
     name: "Construction Monkey Hoist Machine",
     category: "material-lifting",
-    shortDescription: "Equipment for moving material efficiently on site.",
+    shortDescription: "Lift building materials between levels on site.",
     description:
-      "A monkey hoist machine used on construction sites for vertical material handling. Shree Sanjay Equipments is listed as a supplier of this equipment. Specifications available on request.",
+      "A monkey hoist moves building materials vertically on construction sites. Contact us to discuss the available model and lifting requirements.",
     priceStatus: "contact-for-latest-price",
     applications: ["Material Lifting", "Multi-storey Construction Sites"],
     featured: true,
@@ -131,9 +131,9 @@ export const products: Product[] = [
     slug: "vibrator-sand-screening-machine",
     name: "Vibrator Sand Screening Machine",
     category: "screening",
-    shortDescription: "Construction equipment designed for screening and separating sand/material on site.",
+    shortDescription: "Screen sand and separate material before use on site.",
     description:
-      "A vibratory screening machine used to screen and separate sand and other site material. Capacity and specifications are confirmed at the time of enquiry.",
+      "Screen sand and other site materials before they are used. Ask us about current capacity and model details.",
     priceStatus: "contact-for-latest-price",
     applications: ["Sand Screening", "Material Preparation"],
     featured: true,
@@ -147,9 +147,9 @@ export const products: Product[] = [
     slug: "electric-concrete-mixer",
     name: "Electric Concrete Mixer",
     category: "concrete-vibration",
-    shortDescription: "Concrete mixing equipment for site-level pour work.",
+    shortDescription: "Mix concrete at the job site before a pour.",
     description:
-      "An electric concrete mixer for on-site concrete preparation. Capacity and motor specifications available on request.",
+      "Prepare concrete on site with an electric mixer. Contact us for current capacity, motor details and availability.",
     priceStatus: "contact-for-latest-price",
     applications: ["Concrete Work", "General Construction"],
     featured: true,
@@ -164,9 +164,9 @@ export const products: Product[] = [
     name: "Earth Rammer",
     category: "compaction",
     subcategory: "Vibratory Rammer",
-    shortDescription: "Vibratory rammer for compacting soil in confined areas.",
+    shortDescription: "Compact soil in trenches and other confined areas.",
     description:
-      "An earth rammer (vibratory rammer) suited to trench and confined-area compaction work. Specifications available on request.",
+      "An earth rammer is used to compact soil where larger machines have less room to work, such as trenches. Ask us for current model details.",
     priceStatus: "contact-for-latest-price",
     applications: ["Trench Compaction", "Confined Site Areas"],
     featured: true,
@@ -180,9 +180,9 @@ export const products: Product[] = [
     slug: "construction-lift",
     name: "Construction Lift",
     category: "material-lifting",
-    shortDescription: "Site lifting equipment for material handling.",
+    shortDescription: "Move construction materials vertically on site.",
     description:
-      "A construction lift used for vertical movement of material on site. Specifications available on request.",
+      "A construction lift helps move materials between site levels. Contact us to discuss your lifting needs and available models.",
     priceStatus: "contact-for-latest-price",
     applications: ["Material Lifting", "Construction Sites"],
     featured: true,
@@ -195,9 +195,9 @@ export const products: Product[] = [
     slug: "concrete-vibrator",
     name: "Concrete Vibrator",
     category: "concrete-vibration",
-    shortDescription: "Vibration equipment for consolidating poured concrete.",
+    shortDescription: "Remove trapped air from freshly poured concrete.",
     description:
-      "A concrete vibrator used to consolidate freshly poured concrete and remove air pockets. Specifications available on request.",
+      "Use a concrete vibrator during a pour to remove trapped air and help concrete settle around reinforcement. Ask us for model details.",
     priceStatus: "contact-for-latest-price",
     applications: ["Concrete Work", "Foundation & Slab Work"],
     seoTitle: "Concrete Vibrator in Coimbatore | Shree Sanjay Equipments",
@@ -210,9 +210,9 @@ export const products: Product[] = [
     slug: "paver-block-cutting-machine",
     name: "Paver Block Cutting Machine",
     category: "cutting",
-    shortDescription: "Cutting equipment for paver block and surface work.",
+    shortDescription: "Cut paver blocks to fit edges and layouts.",
     description:
-      "A paver block cutting machine used for site-level paver and surface cutting work. Specifications available on request.",
+      "Cut paver blocks to fit edges, corners and planned layouts. Contact us for current machine specifications.",
     priceStatus: "contact-for-latest-price",
     applications: ["Paver & Surface Work"],
     seoTitle: "Paver Block Cutting Machine in Coimbatore | Shree Sanjay Equipments",
@@ -224,8 +224,8 @@ export const products: Product[] = [
     slug: "single-wheel-barrow",
     name: "Single Wheel Barrow",
     category: "site-equipment",
-    shortDescription: "Site material handling equipment.",
-    description: "A single wheel barrow for general on-site material handling.",
+    shortDescription: "Move sand, aggregate and supplies around the site.",
+    description: "A single wheel barrow for moving loose materials and supplies across a job site.",
     priceStatus: "contact-for-latest-price",
     applications: ["General Construction", "Material Handling"],
     seoTitle: "Single Wheel Barrow in Coimbatore | Shree Sanjay Equipments",
@@ -256,6 +256,5 @@ export function priceLabel(product: Product): string {
     const unit = product.priceUnit ? ` / ${product.priceUnit}` : "";
     return `${prefix}₹${product.price.toLocaleString("en-IN")}${unit}`;
   }
-  if (product.priceStatus === "request-price") return "Price on Request";
-  return "Contact for Latest Price";
+  return "Price on request";
 }
