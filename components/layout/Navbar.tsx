@@ -28,11 +28,11 @@ function subscribeHash(callback: () => void) {
 
 function Brand({ onClick }: { onClick?: () => void }) {
   return (
-    <Link href="/" aria-label="Shree Sanjay Equipments home" onClick={onClick} className={cn("flex shrink-0 items-center gap-2 rounded-md", focusStyle)}>
-      <Image src="/images/brand/logo-mark.png" alt="" width={48} height={48} className="h-10 w-10 object-contain sm:h-12 sm:w-12" priority />
+    <Link href="/" aria-label="Shree Sanjay Equipments home" onClick={onClick} className={cn("flex min-w-0 shrink-0 items-center gap-1.5 rounded-md sm:gap-2", focusStyle)}>
+      <Image src="/images/brand/logo-mark.png" alt="" width={48} height={48} className="h-9 w-9 shrink-0 object-contain sm:h-12 sm:w-12" priority />
       <span className="font-heading leading-tight">
-        <span className="block text-[13px] font-extrabold tracking-tight text-accent sm:text-base">SHREE SANJAY</span>
-        <span className="mt-1 block text-[9px] font-semibold tracking-[0.22em] text-ink sm:text-[10px]">EQUIPMENTS</span>
+        <span className="block text-[11px] font-extrabold tracking-tight text-accent sm:text-base">SHREE SANJAY</span>
+        <span className="mt-1 block text-[8px] font-semibold tracking-[0.2em] text-ink sm:text-[10px] sm:tracking-[0.22em]">EQUIPMENTS</span>
       </span>
     </Link>
   );
@@ -76,7 +76,7 @@ export default function Navbar() {
 
   return (
     <header className={cn("sticky top-3 z-50 mx-3 rounded-2xl border border-white/80 bg-paper/88 shadow-[0_12px_40px_rgba(32,36,39,0.13)] backdrop-blur-2xl xl:mx-4", pathname === "/" && "-mb-18 sm:-mb-20")}>
-      <div className="mx-auto flex h-18 max-w-[1600px] items-center justify-between gap-4 px-4 sm:h-20 sm:px-6 lg:px-8 xl:px-10">
+      <div className="mx-auto flex h-18 max-w-[1600px] items-center justify-between gap-2 px-4 sm:h-20 sm:gap-4 sm:px-6 lg:px-8 xl:px-10">
         <Brand />
         <nav aria-label="Main navigation" className="hidden items-center gap-2 rounded-full border border-line/70 bg-white/55 p-1 xl:flex">
           {links.map(({ href, label }) => (

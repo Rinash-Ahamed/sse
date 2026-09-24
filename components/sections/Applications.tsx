@@ -21,14 +21,14 @@ export default function Applications() {
           Where the equipment gets to work
         </RevealHeading>
 
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 xl:gap-5">
           {applications.map((a, i) => (
-            <FadeUp key={a.name} delay={(i % 3) * 0.06}>
-              <div className="group border border-line overflow-hidden">
+            <FadeUp key={a.name} delay={(i % 3) * 0.06} className="h-full min-w-0">
+              <div className="group flex h-full flex-col overflow-hidden border border-line">
                 <div className="relative aspect-square">
                   <EquipmentImage category={a.category} label={a.name} categoryPreview />
                 </div>
-                <div className="px-4 py-3 border-t border-line">
+                <div className="flex flex-1 items-center border-t border-line px-4 py-3">
                   <p className="text-[13px] md:text-sm font-medium tracking-tight">{a.name}</p>
                 </div>
               </div>

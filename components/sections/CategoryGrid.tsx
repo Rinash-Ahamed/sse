@@ -20,7 +20,7 @@ export default function CategoryGrid() {
         Equipment for the work ahead.
       </RevealHeading>
 
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+      <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 xl:gap-5">
         {categories.map((cat, i) => (
           <CategoryCard key={cat.slug} category={cat} large={i === 0} index={i} />
         ))}
@@ -46,13 +46,13 @@ function CategoryCard({
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0 round 10px)" }}
       viewport={{ once: true, margin: "-5%" }}
       transition={{ duration: 0.7, delay: index * 0.09, ease: [0.22, 1, 0.36, 1] }}
-      className={cn("category-reveal", large && "md:col-span-2 md:row-span-2")}
+      className={cn("category-reveal min-w-0", large && "xl:col-span-2 xl:row-span-2")}
     >
       <Link
         href={`/products?category=${category.slug}`}
-        className="group relative block overflow-hidden rounded-lg border border-line bg-surface shadow-[0_4px_18px_rgba(32,36,39,0.03)] transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_14px_36px_rgba(32,36,39,0.12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+        className={cn("group relative block overflow-hidden rounded-lg border border-line bg-surface shadow-[0_4px_18px_rgba(32,36,39,0.03)] transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_14px_36px_rgba(32,36,39,0.12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent", large && "xl:flex xl:h-full xl:flex-col")}
       >
-        <div className={cn("relative", large ? "aspect-[16/10]" : "aspect-[4/3]")}>
+        <div className={cn("relative aspect-[4/3]", large && "xl:aspect-auto xl:min-h-[260px] xl:flex-1")}>
           <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.06] group-focus-visible:scale-[1.06]">
             <EquipmentImage category={category.slug} label={category.name} categoryPreview />
           </div>
@@ -60,13 +60,13 @@ function CategoryCard({
             {category.number}
           </span>
         </div>
-        <div className="relative flex items-center justify-between border-t border-line px-5 py-4">
-          <div>
+        <div className="relative flex min-w-0 items-center justify-between gap-3 border-t border-line px-5 py-4">
+          <div className="min-w-0">
             <p className="font-heading font-semibold text-sm md:text-base tracking-tight">
               {category.name}
             </p>
             {large && (
-              <p className="text-xs text-ink-muted mt-1 max-w-xs hidden md:block">
+              <p className="mt-1 hidden max-w-xs text-xs text-ink-muted xl:block">
                 {category.description}
               </p>
             )}

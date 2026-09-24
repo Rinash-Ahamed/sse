@@ -13,8 +13,8 @@ export default function Footer() {
   return (
     <footer className="bg-ink text-white">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="flex flex-col gap-7 border-b border-white/15 py-12 sm:flex-row sm:items-end sm:justify-between md:py-16">
-          <div>
+        <div className="flex flex-col gap-7 border-b border-white/15 py-12 lg:flex-row lg:items-end lg:justify-between md:py-16">
+          <div className="min-w-0">
             <p className="label-mono text-[11px] text-white/50">Let&apos;s get to work</p>
             <h2 className="mt-3 max-w-xl font-heading text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-5xl">
               The right equipment starts with a conversation.
@@ -31,7 +31,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <div className="grid gap-x-8 gap-y-12 py-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,.7fr)_minmax(0,1fr)_minmax(0,1.2fr)] lg:py-16">
+        <div className="grid gap-x-8 gap-y-12 py-12 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,.7fr)_minmax(0,1fr)_minmax(0,1.2fr)] lg:py-16">
           <div className="max-w-sm">
             <Link href="/" aria-label="Shree Sanjay Equipments home" className="inline-block rounded-md bg-paper px-4 py-2">
               <Image src="/images/brand/logo-full.png" alt="Shree Sanjay Equipments" width={300} height={216} className="h-auto w-48" />

@@ -82,16 +82,16 @@ export default async function ProductDetailPage({
       />
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
-        <div className="md:col-span-7">
+        <div className="min-w-0 md:col-span-7">
           <ProductGallery key={product.slug} category={product.category} name={product.name} images={product.images} />
         </div>
-        <div className="md:col-span-5">
+        <div className="min-w-0 md:col-span-5">
           <ProductInfo product={product} />
         </div>
       </div>
 
       <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-12 gap-10">
-        <div className="md:col-span-7 space-y-12">
+        <div className="min-w-0 space-y-12 md:col-span-7">
           {product.description && (
             <section>
               <h2 className="label-mono text-[11px] text-ink-muted mb-3">Overview</h2>
@@ -104,9 +104,9 @@ export default async function ProductDetailPage({
               <h2 className="label-mono text-[11px] text-ink-muted mb-3">Technical Specifications</h2>
               <dl className="border-t border-line">
                 {product.specifications.map((s) => (
-                  <div key={s.label} className="flex justify-between py-3 border-b border-line text-sm">
+                  <div key={s.label} className="grid grid-cols-2 gap-4 border-b border-line py-3 text-sm">
                     <dt className="text-ink-muted">{s.label}</dt>
-                    <dd className="font-medium">{s.value}</dd>
+                    <dd className="break-words text-right font-medium">{s.value}</dd>
                   </div>
                 ))}
               </dl>

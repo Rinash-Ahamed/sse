@@ -25,7 +25,7 @@ export default function ProductInfo({ product }: { product: Product }) {
   }, []);
 
   return (
-    <div className="md:sticky md:top-24">
+    <div className="min-w-0 md:sticky md:top-24">
       <nav aria-label="Breadcrumb" className="text-xs text-ink-muted">
         <Link href="/" className="hover:text-ink">Home</Link>
         <span className="mx-2">/</span>
@@ -44,19 +44,19 @@ export default function ProductInfo({ product }: { product: Product }) {
 
       <p className="mt-6 text-xl font-semibold">{priceLabel(product)}</p>
 
-      <div className="mt-6 flex flex-col sm:flex-row gap-3">
+      <div className="mt-6 flex flex-col gap-3 xl:flex-row xl:flex-wrap">
         <a
           href={waLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 rounded-md bg-accent hover:bg-accent-strong text-white px-6 py-3.5 text-[13px] font-medium transition-transform hover:-translate-y-0.5"
+          className="inline-flex min-w-0 items-center justify-center gap-2 rounded-md bg-accent px-5 py-3.5 text-center text-[13px] font-medium text-white transition-transform hover:-translate-y-0.5 hover:bg-accent-strong"
         >
           <MessageCircle className="h-4 w-4" />
           Ask for price on WhatsApp
         </a>
         <Link
           href="/contact"
-          className="inline-flex items-center justify-center gap-2 rounded-md border border-steel/50 hover:bg-surface px-6 py-3.5 text-[13px] font-medium transition-transform hover:-translate-y-0.5"
+          className="inline-flex min-w-0 items-center justify-center gap-2 rounded-md border border-steel/50 px-5 py-3.5 text-center text-[13px] font-medium transition-transform hover:-translate-y-0.5 hover:bg-surface"
         >
           <Mail className="h-4 w-4" />
           Send an enquiry

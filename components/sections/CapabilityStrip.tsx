@@ -15,7 +15,7 @@ export default function CapabilityStrip() {
 
   return (
     <section aria-label="How we can help" className="border-b border-line bg-paper">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-3 px-5 py-6 sm:grid-cols-2 sm:gap-4 md:px-8 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-3 px-5 py-6 sm:grid-cols-2 sm:gap-4 md:px-8 xl:grid-cols-4">
         {items.map(({ icon: Icon, title, detail }, index) => (
           <motion.div
             key={title}
