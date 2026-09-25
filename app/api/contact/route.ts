@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { ErrorResponse } from "resend";
 import { contactSchema } from "@/lib/schema";
+import { createContactEnquiryEmail } from "@/lib/email/contactEnquiry";
 
 function resendFailure(error: ErrorResponse) {
   const configurationErrors = new Set([
@@ -73,22 +74,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const enquiryTopic = data.products.length === 1
-    ? data.products[0]
-    : data.products.length > 1
-      ? `${data.products.length} items`
-      : "General";
-  const subject = `Website Enquiry: ${enquiryTopic}`;
-  const text = [
-    `Name: ${data.name}`,
-    `Phone: ${data.phone}`,
-    `Email: ${data.email || "-"}`,
-    `Company: ${data.company || "-"}`,
-    `Equipment or services:\n${data.products.length ? data.products.map((item) => `- ${item}`).join("\n") : "-"}`,
-    `Message: ${data.message || "-"}`,
-    "",
-    `Date/Time: ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`,
-  ].join("\n");
+  const { subject, html, text } = createContactEnquiryEmail(data);
 
   const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.CONTACT_TO_EMAIL || "sanjayequipments@gmail.com";
@@ -118,6 +104,7 @@ export async function POST(req: Request) {
       from: fromEmail,
       to: toEmail,
       subject,
+      html,
       text,
       replyTo: data.email || undefined,
     });
