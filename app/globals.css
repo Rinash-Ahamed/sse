@@ -39,23 +39,32 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) var(--color-paper);
 }
 
 html::-webkit-scrollbar {
-  display: none;
+  width: 9px;
 }
 
-body::-webkit-scrollbar {
-  display: none;
+html::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+
+html::-webkit-scrollbar-thumb {
+  border: 2px solid var(--color-paper);
+  border-radius: 999px;
+  background: var(--color-accent);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-strong);
 }
 
 body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body);
-  scrollbar-width: none;
 }
 
 @supports (content-visibility: auto) {
