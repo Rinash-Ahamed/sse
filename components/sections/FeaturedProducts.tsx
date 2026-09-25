@@ -127,20 +127,22 @@ function ProductPanel({ product, activeIndex, reducedMotion, visualY }: {
       <motion.div className={styles.visual} style={{ y: visualY }}>
         <span className={styles.blueprintRing} aria-hidden="true" />
         <span className={styles.crosshair} aria-hidden="true" />
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={product.id}
-            className={styles.largeImage}
-            initial={reducedMotion ? false : { opacity: 0, scale: 0.975, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={reducedMotion ? undefined : { opacity: 0, scale: 1.015, y: -6 }}
-            transition={{ duration: reducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {product.images?.[0] && (
-              <Image src={product.images[0]} alt={product.name} fill quality={85} sizes="(max-width: 1024px) 60vw, 900px" className={styles.largeProductImage} />
-            )}
-          </motion.div>
-        </AnimatePresence>
+        <div className={styles.largeImageFrame}>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={product.id}
+              className={styles.largeImage}
+              initial={reducedMotion ? false : { opacity: 0, scale: 0.975, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={reducedMotion ? undefined : { opacity: 0, scale: 1.015, y: -6 }}
+              transition={{ duration: reducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {product.images?.[0] && (
+                <Image src={product.images[0]} alt={product.name} fill quality={85} sizes="(max-width: 1024px) 55vw, 560px" className={styles.panelProductImage} />
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
         <span className={styles.visualIndex} aria-hidden="true">0{activeIndex + 1}</span>
       </motion.div>
 

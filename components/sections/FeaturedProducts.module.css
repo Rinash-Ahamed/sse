@@ -124,14 +124,37 @@
   min-height: 340px;
   overflow: hidden;
   isolation: isolate;
+  container-type: size;
 }
-.largeImage { position: absolute; z-index: 2; inset: 0; }
+.largeImageFrame {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: min(68%, 520px);
+  width: min(68cqw, calc(100cqh - 32px), 520px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--color-paper);
+  box-shadow: 0 18px 55px rgba(32,36,39,.08);
+  transform: translate(-50%, -50%);
+}
+.largeImage { position: absolute; inset: 0; }
+.panelProductImage {
+  border-radius: 50%;
+  object-fit: contain;
+  object-position: center;
+  padding: 5%;
+  mix-blend-mode: multiply;
+}
 .largeProductImage { object-fit: contain; padding: 2%; mix-blend-mode: multiply; }
 .blueprintRing {
   position: absolute;
   top: 50%;
   left: 50%;
   width: min(68%, 520px);
+  width: min(68cqw, calc(100cqh - 32px), 520px);
   aspect-ratio: 1;
   border: 1px solid rgba(125,0,18,.12);
   border-radius: 50%;
