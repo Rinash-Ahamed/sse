@@ -83,10 +83,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${manrope.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `try{if(location.pathname==='/'&&!sessionStorage.getItem('sse-intro-seen')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){var style=document.createElement('style');style.id='sse-intro-initial';style.textContent='#sse-home-intro{display:flex}';document.head.appendChild(style)}}catch(e){}` }} />
+        <script dangerouslySetInnerHTML={{ __html: `try{if(location.pathname==='/'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){var style=document.createElement('style');style.id='sse-intro-initial';style.textContent='#sse-home-intro{display:flex}';document.head.appendChild(style)}}catch(e){}` }} />
       </head>
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <script

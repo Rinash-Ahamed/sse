@@ -11,7 +11,6 @@
   color: #202427;
   isolation: isolate;
 }
-.visible { display: flex; }
 .overlay::before {
   content: "";
   position: absolute;

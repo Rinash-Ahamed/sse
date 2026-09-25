@@ -38,12 +38,23 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body);
+  scrollbar-width: none;
 }
 
 h1, h2, h3, h4, h5 {

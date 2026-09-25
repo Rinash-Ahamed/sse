@@ -1,56 +1,46 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./HomeIntro.module.css";
 
-const STORAGE_KEY = "sse-intro-seen";
 const MIN_DURATION = 1400;
 const MAX_DURATION = 2600;
 const EXIT_DURATION = 420;
 
 export default function HomeIntro() {
-  const startedRef = useRef(false);
-  const [visible, setVisible] = useState(false);
-  const [exiting, setExiting] = useState(false);
+  const cleanupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const previousOverflowRef = useRef<string | null>(null);
 
   useEffect(() => {
+    if (cleanupTimerRef.current) clearTimeout(cleanupTimerRef.current);
     const initialStyle = document.getElementById("sse-intro-initial");
+    if (!initialStyle) return;
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      initialStyle?.remove();
+      initialStyle.remove();
       return;
     }
 
-    try {
-      if (sessionStorage.getItem(STORAGE_KEY) && !initialStyle && !startedRef.current) return;
-      sessionStorage.setItem(STORAGE_KEY, "1");
-    } catch {
-      initialStyle?.remove();
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    startedRef.current = true;
+    const overlay = document.getElementById("sse-home-intro");
+    if (previousOverflowRef.current === null) previousOverflowRef.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    setVisible(true);
-    setExiting(false);
 
     let finishTimer: ReturnType<typeof setTimeout>;
+    let video: HTMLVideoElement | null = null;
     let finished = false;
     const finish = () => {
       if (finished) return;
       finished = true;
-      setExiting(true);
+      overlay?.classList.add(styles.exiting);
       finishTimer = setTimeout(() => {
-        setVisible(false);
-        startedRef.current = false;
-        initialStyle?.remove();
-        document.body.style.overflow = previousOverflow;
+        initialStyle.remove();
+        document.body.style.overflow = previousOverflowRef.current ?? "";
       }, EXIT_DURATION);
     };
 
     const minimumTimer = setTimeout(() => {
-      const video = document.querySelector<HTMLVideoElement>("video[data-hero-video]");
+      video = document.querySelector<HTMLVideoElement>("video[data-hero-video]");
       if (!video || (!video.paused && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA)) {
         finish();
       } else {
@@ -63,14 +53,16 @@ export default function HomeIntro() {
       clearTimeout(minimumTimer);
       clearTimeout(maximumTimer);
       clearTimeout(finishTimer);
-      document.querySelector<HTMLVideoElement>("video[data-hero-video]")?.removeEventListener("playing", finish);
-      initialStyle?.remove();
-      document.body.style.overflow = previousOverflow;
+      video?.removeEventListener("playing", finish);
+      cleanupTimerRef.current = setTimeout(() => {
+        initialStyle.remove();
+        document.body.style.overflow = previousOverflowRef.current ?? "";
+      }, 0);
     };
   }, []);
 
   return (
-    <div id="sse-home-intro" className={`${styles.overlay} ${visible ? styles.visible : ""} ${exiting ? styles.exiting : ""}`} role="status" aria-label="Opening Shree Sanjay Equipments">
+    <div id="sse-home-intro" className={styles.overlay} role="status" aria-label="Opening Shree Sanjay Equipments">
       <span className={styles.topLabel}>Shree Sanjay Equipments <span>/</span> Coimbatore</span>
       <span className={styles.watermark} aria-hidden="true">SSE</span>
       <div className={styles.center}>
