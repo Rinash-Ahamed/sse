@@ -179,11 +179,13 @@ export default function Hero() {
 
     hero.addEventListener("pointermove", onMove);
     hero.addEventListener("pointerleave", hide);
+    window.addEventListener("scroll", hide, { passive: true });
     window.addEventListener("blur", hide);
     return () => {
       hide();
       hero.removeEventListener("pointermove", onMove);
       hero.removeEventListener("pointerleave", hide);
+      window.removeEventListener("scroll", hide);
       window.removeEventListener("blur", hide);
     };
   }, [videoPlaying]);

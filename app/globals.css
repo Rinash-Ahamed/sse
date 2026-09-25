@@ -58,6 +58,13 @@ body {
   scrollbar-width: none;
 }
 
+@supports (content-visibility: auto) {
+  main > section:nth-child(n + 3) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}
+
 h1, h2, h3, h4, h5 {
   font-family: var(--font-heading);
   letter-spacing: -0.02em;

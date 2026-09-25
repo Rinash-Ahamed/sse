@@ -51,13 +51,13 @@ export default function AboutPage() {
               </a>
             </div>
           </div>
-          <div className="relative min-h-[360px] overflow-hidden rounded-2xl bg-surface lg:min-h-full">
+          <div className="group relative min-h-[360px] overflow-hidden rounded-2xl bg-surface lg:min-h-full">
             <Image
               src="/images/about.png"
               alt="Concrete mixer, power trowel, screening equipment and wheelbarrow in a workshop"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-center"
+              className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.045] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             />
             <div className="absolute bottom-5 left-5 right-5 flex items-center gap-3 rounded-md border border-white/70 bg-paper/95 px-5 py-4 shadow-lg backdrop-blur-sm sm:bottom-8 sm:left-8 sm:right-auto">
               <MapPin className="h-5 w-5 shrink-0 text-accent" />

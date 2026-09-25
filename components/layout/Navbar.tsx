@@ -93,7 +93,7 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className={cn("sticky top-3 z-50 mx-3 rounded-2xl border border-white/80 bg-paper/88 shadow-[0_12px_40px_rgba(32,36,39,0.13)] backdrop-blur-2xl xl:mx-4", pathname === "/" && "-mb-18 sm:-mb-20")}>
+    <header className={cn("sticky top-3 z-50 mx-3 translate-z-0 rounded-2xl border border-white/80 bg-paper/96 shadow-[0_12px_40px_rgba(32,36,39,0.13)] xl:mx-4", pathname === "/" && "-mb-18 sm:-mb-20")}>
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-2 px-4 sm:h-20 sm:gap-4 sm:px-6 lg:px-8 xl:px-10">
         <Brand onClick={(event) => handleNavigation(event, "/")} />
         <nav aria-label="Main navigation" className="hidden items-center gap-2 rounded-full border border-line/70 bg-white/55 p-1 xl:flex">
