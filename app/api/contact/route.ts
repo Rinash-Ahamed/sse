@@ -1,5 +1,54 @@
 import { NextResponse } from "next/server";
+import type { ErrorResponse } from "resend";
 import { contactSchema } from "@/lib/schema";
+
+function resendFailure(error: ErrorResponse) {
+  const configurationErrors = new Set([
+    "invalid_api_key",
+    "restricted_api_key",
+    "invalid_access",
+    "invalid_from_address",
+    "validation_error",
+  ]);
+  const quotaErrors = new Set([
+    "monthly_quota_exceeded",
+    "daily_quota_exceeded",
+    "rate_limit_exceeded",
+  ]);
+
+  console.error("Resend rejected enquiry email", {
+    code: error.name,
+    statusCode: error.statusCode,
+    message: error.message,
+  });
+
+  if (configurationErrors.has(error.name)) {
+    return NextResponse.json(
+      {
+        ok: false,
+        code: `EMAIL_${error.name.toUpperCase()}`,
+        error: "Email delivery is not configured correctly. Please call or WhatsApp us.",
+      },
+      { status: 503 },
+    );
+  }
+
+  if (quotaErrors.has(error.name)) {
+    return NextResponse.json(
+      {
+        ok: false,
+        code: `EMAIL_${error.name.toUpperCase()}`,
+        error: "Email delivery is temporarily busy. Please try again shortly or contact us on WhatsApp.",
+      },
+      { status: 503 },
+    );
+  }
+
+  return NextResponse.json(
+    { ok: false, code: "EMAIL_PROVIDER_ERROR", error: "We couldn't send your enquiry. Please WhatsApp or call us directly." },
+    { status: 502 },
+  );
+}
 
 export async function POST(req: Request) {
   let body: unknown;
@@ -72,13 +121,13 @@ export async function POST(req: Request) {
       text,
       replyTo: data.email || undefined,
     });
-    if (error) throw new Error(error.message);
+    if (error) return resendFailure(error);
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("Failed to send enquiry email", err);
+    console.error("Unable to reach Resend", err);
     return NextResponse.json(
-      { ok: false, error: "We couldn't send your enquiry. Please WhatsApp or call us directly." },
-      { status: 500 },
+      { ok: false, code: "EMAIL_NETWORK_ERROR", error: "Email delivery is temporarily unavailable. Please try again or contact us on WhatsApp." },
+      { status: 502 },
     );
   }
 }

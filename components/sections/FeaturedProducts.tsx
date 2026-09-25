@@ -1,11 +1,19 @@
 "use client";
 
-import { useEffect, useRef, type PointerEvent } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
-import { getCategoryBySlug, getFeaturedProducts, priceLabel, type Product } from "@/lib/products";
+import { getCategoryBySlug, getFeaturedProducts, type Product } from "@/lib/products";
 import { productWhatsAppLink } from "@/lib/whatsapp";
 import SectionLabel from "@/components/ui/SectionLabel";
 import styles from "./FeaturedProducts.module.css";
@@ -14,129 +22,179 @@ const featured = getFeaturedProducts();
 const showcase = [
   ...featured.filter((product) => product.id === "electric-concrete-mixer"),
   ...featured.filter((product) => product.id !== "electric-concrete-mixer"),
-];
+].slice(0, 5);
 
 export default function FeaturedProducts() {
   const reducedMotion = useReducedMotion();
+  const experienceRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const { scrollYProgress } = useScroll({ target: experienceRef, offset: ["start start", "end end"] });
+  const visualY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [-8, 8]);
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    const next = Math.min(showcase.length - 1, Math.floor(progress * showcase.length));
+    setActiveIndex((current) => current === next ? current : next);
+  });
+
+  const activateNode = (index: number) => {
+    setActiveIndex(index);
+    const experience = experienceRef.current;
+    if (!experience) return;
+    const top = window.scrollY + experience.getBoundingClientRect().top;
+    const distance = Math.max(0, experience.offsetHeight - window.innerHeight);
+    window.scrollTo({
+      top: top + distance * (index / Math.max(1, showcase.length - 1)),
+      behavior: reducedMotion ? "instant" : "smooth",
+    });
+  };
 
   return (
-    <section id="featured-equipment" className="border-t border-line bg-paper">
-      <div className="mx-auto max-w-7xl px-5 pt-14 md:px-8 md:pt-20">
-        <div className="grid items-end gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.55fr)] lg:gap-16">
-          <div>
-            <SectionLabel>Featured Equipment</SectionLabel>
-            <h2 className="mt-5 overflow-hidden font-heading text-[clamp(2.7rem,5vw,5.1rem)] font-extrabold leading-[1.02] tracking-[-0.045em]">
-              <motion.span className="block" initial={reducedMotion ? false : { y: "110%" }} whileInView={{ y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>Built for the work</motion.span>
-              <motion.span className="block text-accent" initial={reducedMotion ? false : { y: "110%" }} whileInView={{ y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65, delay: 0.07, ease: [0.22, 1, 0.36, 1] }}>that matters.</motion.span>
-            </h2>
-          </div>
-          <p className="max-w-sm pb-1 text-[15px] leading-relaxed text-ink-muted lg:justify-self-end">
-            Explore construction equipment for practical site requirements.
-          </p>
+    <section id="featured-equipment" className={styles.section}>
+      <div className={styles.heading}>
+        <div>
+          <SectionLabel>Featured Equipment</SectionLabel>
+          <h2 className={styles.title}>Built for the work <span>that matters.</span></h2>
+        </div>
+        <p className={styles.intro}>Five site-ready machines, selected for the work that keeps a project moving.</p>
+      </div>
+
+      <div ref={experienceRef} className={styles.experience}>
+        <div className={styles.stickyStage}>
+          <ProductNodes products={showcase} activeIndex={activeIndex} progress={scrollYProgress} onSelect={activateNode} />
+          <ProductPanel product={showcase[activeIndex]} activeIndex={activeIndex} reducedMotion={Boolean(reducedMotion)} visualY={visualY} />
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 pb-20 md:px-8 md:pb-28">
+      <div className={styles.mobileList}>
         {showcase.map((product, index) => (
-          <FeaturedRow key={product.id} product={product} index={index} reducedMotion={Boolean(reducedMotion)} />
+          <MobileProductCard key={product.id} product={product} index={index} reducedMotion={Boolean(reducedMotion)} />
         ))}
-        <div className="flex justify-end border-t border-line pt-8">
-          <Link href="/products" className="group inline-flex items-center gap-3 border-b border-ink pb-1 text-sm font-semibold transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
-            Browse all equipment <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true" />
-          </Link>
-        </div>
+      </div>
+
+      <div className={styles.footerLink}>
+        <Link href="/products" className={styles.allProducts}>
+          Browse all equipment <ArrowUpRight aria-hidden="true" />
+        </Link>
       </div>
     </section>
   );
 }
 
-function FeaturedRow({ product, index, reducedMotion }: { product: Product; index: number; reducedMotion: boolean }) {
-  const category = getCategoryBySlug(product.category);
-  const number = String(index + 1).padStart(2, "0");
-  const visualFirst = index % 2 === 1;
-  const stageRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const graphicRef = useRef<HTMLDivElement>(null);
-  const lightRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef(0);
-  const targetRef = useRef({ x: 0, y: 0 });
-  const currentRef = useRef({ x: 0, y: 0 });
-
-  useEffect(() => () => cancelAnimationFrame(frameRef.current), []);
-
-  const animate = () => {
-    const current = currentRef.current;
-    const target = targetRef.current;
-    current.x += (target.x - current.x) * 0.13;
-    current.y += (target.y - current.y) * 0.13;
-    if (imageRef.current) imageRef.current.style.transform = `translate3d(${current.x * 7}px, ${current.y * 5}px, 0)`;
-    if (graphicRef.current) graphicRef.current.style.transform = `translate3d(${-current.x * 2.5}px, ${-current.y * 2.5}px, 0)`;
-    if (lightRef.current) lightRef.current.style.transform = `translate3d(${target.x * 28}px, ${target.y * 20}px, 0)`;
-    if (Math.abs(target.x - current.x) + Math.abs(target.y - current.y) > 0.01) {
-      frameRef.current = requestAnimationFrame(animate);
-    } else {
-      frameRef.current = 0;
-      if (imageRef.current) imageRef.current.style.willChange = "auto";
-    }
-  };
-
-  const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    if (reducedMotion || event.pointerType !== "mouse" || window.innerWidth < 1024) return;
-    const rect = stageRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    targetRef.current = {
-      x: ((event.clientX - rect.left) / rect.width - 0.5) * 2,
-      y: ((event.clientY - rect.top) / rect.height - 0.5) * 2,
-    };
-    if (imageRef.current) imageRef.current.style.willChange = "transform";
-    if (!frameRef.current) frameRef.current = requestAnimationFrame(animate);
-  };
-
-  const onPointerLeave = () => {
-    targetRef.current = { x: 0, y: 0 };
-    if (!frameRef.current) frameRef.current = requestAnimationFrame(animate);
-  };
-
+function ProductNodes({ products, activeIndex, progress, onSelect }: {
+  products: Product[];
+  activeIndex: number;
+  progress: MotionValue<number>;
+  onSelect: (index: number) => void;
+}) {
   return (
-    <article className={`${styles.row} ${visualFirst ? styles.rowReverse : ""} ${index === 0 ? styles.firstRow : ""}`}>
-      <motion.div
-        className={styles.copy}
-        initial={reducedMotion ? false : { opacity: 0, y: 20 }}
-        whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <p className="label-mono text-[11px] font-semibold text-accent">Featured / {number} <span className="ml-3 text-ink-muted">{category?.shortName}</span></p>
-        <h3 className="mt-5 max-w-[14ch] font-heading text-[clamp(2rem,3.5vw,4.1rem)] font-extrabold leading-[1.06] tracking-tight">{product.name}</h3>
-        <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-ink-muted">{product.shortDescription}</p>
-        <p className="mt-7 text-sm font-semibold text-ink">{priceLabel(product)}</p>
-        <div className="mt-8 flex flex-wrap items-center gap-5">
-          <Link href={`/products/${product.slug}`} className="group inline-flex min-h-11 items-center gap-2 border-b border-ink pb-1 text-[13px] font-semibold hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
-            View equipment <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true" />
-          </Link>
-          <a href={productWhatsAppLink(product.name, `/products/${product.slug}`)} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-[13px] font-medium text-accent hover:text-accent-strong focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
-            <MessageCircle className="h-4 w-4" aria-hidden="true" /> WhatsApp enquiry
-          </a>
-        </div>
+    <div className={styles.nodeArea}>
+      <div className={styles.track} aria-hidden="true"><motion.span className={styles.trackFill} style={{ scaleX: progress }} /></div>
+      <div className={styles.nodes} role="tablist" aria-label="Featured equipment">
+        {products.map((product, index) => {
+          const active = activeIndex === index;
+          return (
+            <button
+              key={product.id}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              aria-controls="featured-product-panel"
+              onClick={() => onSelect(index)}
+              className={`${styles.nodeButton} ${active ? styles.nodeActive : ""}`}
+            >
+              <span className={styles.nodeRing} aria-hidden="true" />
+              <span className={styles.nodeImage}>
+                {product.images?.[0] && <Image src={product.images[0]} alt="" fill sizes="112px" className={styles.nodeProductImage} />}
+              </span>
+              <span className={styles.nodeName}>{product.name}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function ProductPanel({ product, activeIndex, reducedMotion, visualY }: {
+  product: Product;
+  activeIndex: number;
+  reducedMotion: boolean;
+  visualY: MotionValue<number>;
+}) {
+  const category = getCategoryBySlug(product.category);
+  return (
+    <div id="featured-product-panel" role="tabpanel" className={styles.panel}>
+      <motion.div className={styles.visual} style={{ y: visualY }}>
+        <span className={styles.blueprintRing} aria-hidden="true" />
+        <span className={styles.crosshair} aria-hidden="true" />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={product.id}
+            className={styles.largeImage}
+            initial={reducedMotion ? false : { opacity: 0, scale: 0.975, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={reducedMotion ? undefined : { opacity: 0, scale: 1.015, y: -6 }}
+            transition={{ duration: reducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {product.images?.[0] && (
+              <Image src={product.images[0]} alt={product.name} fill quality={85} sizes="(max-width: 1024px) 60vw, 900px" className={styles.largeProductImage} />
+            )}
+          </motion.div>
+        </AnimatePresence>
+        <span className={styles.visualIndex} aria-hidden="true">0{activeIndex + 1}</span>
       </motion.div>
 
-      <div ref={stageRef} onPointerMove={onPointerMove} onPointerLeave={onPointerLeave} className={styles.stage}>
-        <div ref={graphicRef} className={styles.engineering} aria-hidden="true" />
-        <span className={styles.bigNumber} aria-hidden="true">{number}</span>
-        <div ref={lightRef} className={styles.light} aria-hidden="true" />
+      <AnimatePresence mode="wait" initial={false}>
         <motion.div
-          className={styles.imageReveal}
-          initial={reducedMotion ? false : { opacity: 0, y: 20, scale: 1.035, clipPath: "inset(0 0 100% 0)" }}
-          whileInView={reducedMotion ? undefined : { opacity: 1, y: 0, scale: 1, clipPath: "inset(0 0 0% 0)" }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          key={product.id}
+          className={styles.copy}
+          initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reducedMotion ? undefined : { opacity: 0, y: -10 }}
+          transition={{ duration: reducedMotion ? 0 : 0.36, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div ref={imageRef} className={styles.imageMotion}>
-            {product.images?.[0] && <Image src={product.images[0]} alt={product.name} fill quality={85} sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 760px" className={styles.productImage} />}
-          </div>
+          <p className={styles.category}>{category?.shortName ?? "Equipment"}</p>
+          <h3>{product.name}</h3>
+          <p className={styles.description}>{product.shortDescription}</p>
+          <ProductActions product={product} />
         </motion.div>
-        <span className={styles.stageLine} aria-hidden="true" />
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function MobileProductCard({ product, index, reducedMotion }: { product: Product; index: number; reducedMotion: boolean }) {
+  const category = getCategoryBySlug(product.category);
+  return (
+    <motion.article
+      className={styles.mobileCard}
+      initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+      whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className={styles.mobileImage}>
+        <span className={styles.mobileRing} aria-hidden="true" />
+        {product.images?.[0] && <Image src={product.images[0]} alt={product.name} fill sizes="86vw" className={styles.largeProductImage} />}
+        <span className={styles.mobileIndex}>0{index + 1}</span>
       </div>
-    </article>
+      <div className={styles.mobileCopy}>
+        <p className={styles.category}>{category?.shortName ?? "Equipment"}</p>
+        <h3>{product.name}</h3>
+        <p className={styles.description}>{product.shortDescription}</p>
+        <ProductActions product={product} />
+      </div>
+    </motion.article>
+  );
+}
+
+function ProductActions({ product }: { product: Product }) {
+  return (
+    <div className={styles.actions}>
+      <Link href={`/products/${product.slug}`} className={styles.viewLink}>View Product <ArrowUpRight aria-hidden="true" /></Link>
+      <a href={productWhatsAppLink(product.name, `/products/${product.slug}`)} target="_blank" rel="noopener noreferrer" className={styles.whatsappLink}>
+        <MessageCircle aria-hidden="true" /> Enquire
+      </a>
+    </div>
   );
 }
