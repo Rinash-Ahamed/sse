@@ -8,7 +8,7 @@ import { generalWhatsAppLink } from "@/lib/whatsapp";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Get to know Shree Sanjay Equipments in Coimbatore. Explore construction equipment, repair and servicing support, and ways to contact our team.",
+    "Since 2004, Shree Sanjay Equipments has been based in Coimbatore. Explore our construction equipment, repair and servicing support.",
 };
 
 const support = [
@@ -43,7 +43,7 @@ export default function AboutPage() {
               Built around the work <span className="text-accent">you do.</span>
             </h1>
             <p className="mt-7 max-w-lg text-base leading-relaxed text-ink-muted md:text-lg">
-              Every site has a different challenge. We help customers in Coimbatore find construction equipment for the job and offer repair and servicing support when machines need attention.
+              Based in Coimbatore since 2004, we know every site brings a different challenge. We help customers find construction equipment for the job and offer repair and servicing support when machines need attention.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link href="/products" className="group inline-flex items-center gap-3 rounded-md bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-strong">

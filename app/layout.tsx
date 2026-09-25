@@ -57,6 +57,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: "Shree Sanjay Equipments",
+  foundingDate: "2004",
   image: "https://www.shreesanjayequipments.com/images/brand/logo-full.png",
   telephone: ["+91 98422 30721", "+91 98421 06090"],
   email: "sanjayequipments@gmail.com",

@@ -63,7 +63,7 @@ export default function HomeIntro() {
 
   return (
     <div id="sse-home-intro" className={styles.overlay} role="status" aria-label="Opening Shree Sanjay Equipments">
-      <span className={styles.topLabel}>Shree Sanjay Equipments <span>/</span> Coimbatore</span>
+      <span className={styles.topLabel}>Shree Sanjay Equipments <span>/</span> Since 2004</span>
       <span className={styles.watermark} aria-hidden="true">SSE</span>
       <div className={styles.center}>
         <div className={styles.logoWrap}>

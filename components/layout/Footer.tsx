@@ -37,7 +37,7 @@ export default function Footer() {
               <Image src="/images/brand/logo-full.png" alt="Shree Sanjay Equipments" width={300} height={216} className="h-auto w-48" />
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/65">
-              Construction equipment, repairs and servicing in Coimbatore.
+              Based in Coimbatore since 2004. Construction equipment, repairs and servicing for the work ahead.
             </p>
           </div>
 

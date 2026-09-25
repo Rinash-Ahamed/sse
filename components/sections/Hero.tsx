@@ -223,7 +223,7 @@ export default function Hero() {
       <div className="relative z-30 mx-auto w-full max-w-7xl px-5 pb-16 pt-28 sm:pb-20 sm:pt-32 md:px-8 md:py-24">
         <div className="max-w-xl">
           <p className="label-mono mb-6 text-[10px] text-ink-muted before:mb-4 before:block before:h-px before:w-8 before:bg-accent sm:text-[11px]">
-            Construction Equipment &middot; Coimbatore
+            Construction Equipment &middot; Coimbatore &middot; Since 2004
           </p>
           <h1 className="min-h-[2.08em] font-heading text-[clamp(2.25rem,10vw,2.6rem)] font-extrabold leading-[1.04] tracking-tight sm:text-6xl xl:text-7xl">
             <span key={headlineIndex} className={styles.headlineFrame}>
