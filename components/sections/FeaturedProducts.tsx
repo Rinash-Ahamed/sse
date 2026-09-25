@@ -8,7 +8,6 @@ import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { getCategoryBySlug, getFeaturedProducts, priceLabel, type Product } from "@/lib/products";
 import { productWhatsAppLink } from "@/lib/whatsapp";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { LineReveal } from "@/components/ui/RevealText";
 import styles from "./FeaturedProducts.module.css";
 
 const featured = getFeaturedProducts();
@@ -23,12 +22,7 @@ export default function FeaturedProducts() {
   return (
     <section id="featured-equipment" className="border-t border-line bg-paper">
       <div className="mx-auto max-w-7xl px-5 pt-14 md:px-8 md:pt-20">
-        <div className="flex items-center gap-4 text-[10px] font-semibold uppercase tracking-[0.19em] text-ink-muted">
-          <span>Product system</span>
-          <LineReveal className="flex-1 bg-ink/20" />
-          <span className="text-accent">SSE / 01</span>
-        </div>
-        <div className="mt-14 grid items-end gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.55fr)] lg:gap-16">
+        <div className="grid items-end gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.55fr)] lg:gap-16">
           <div>
             <SectionLabel>Featured Equipment</SectionLabel>
             <h2 className="mt-5 overflow-hidden font-heading text-[clamp(2.7rem,5vw,5.1rem)] font-extrabold leading-[1.02] tracking-[-0.045em]">

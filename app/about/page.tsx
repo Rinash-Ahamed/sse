@@ -13,19 +13,16 @@ export const metadata: Metadata = {
 
 const support = [
   {
-    number: "01",
     icon: Settings2,
     title: "Find the right machine",
     description: "From concrete mixers and compactors to lifting and screening equipment, start with what the job needs.",
   },
   {
-    number: "02",
     icon: Wrench,
     title: "Keep it working",
     description: "Need a repair or routine service? Tell us about the machine and we can discuss the support available.",
   },
   {
-    number: "03",
     icon: MessageCircle,
     title: "Talk to a real person",
     description: "Ask about availability, specifications or pricing directly by phone, WhatsApp or email.",
@@ -54,13 +51,13 @@ export default function AboutPage() {
               </a>
             </div>
           </div>
-          <div className="relative min-h-[360px] overflow-hidden bg-surface lg:min-h-full">
+          <div className="relative min-h-[360px] overflow-hidden rounded-2xl bg-surface lg:min-h-full">
             <Image
-              src="/images/hero/sse-hero.png"
-              alt="Construction equipment at a job site"
+              src="/images/about.png"
+              alt="Concrete mixer, power trowel, screening equipment and wheelbarrow in a workshop"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-[67%_center]"
+              className="object-cover object-center"
             />
             <div className="absolute bottom-5 left-5 right-5 flex items-center gap-3 rounded-md border border-white/70 bg-paper/95 px-5 py-4 shadow-lg backdrop-blur-sm sm:bottom-8 sm:left-8 sm:right-auto">
               <MapPin className="h-5 w-5 shrink-0 text-accent" />
@@ -92,11 +89,10 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-3">
-          {support.map(({ number, icon: Icon, title, description }) => (
-            <div key={number} className="bg-paper p-7 md:p-8">
+          {support.map(({ icon: Icon, title, description }) => (
+            <div key={title} className="bg-paper p-7 md:p-8">
               <div className="flex items-start justify-between">
                 <Icon className="h-9 w-9 text-accent" strokeWidth={1.4} />
-                <span className="label-mono text-[11px] text-ink-muted">{number}</span>
               </div>
               <h3 className="mt-8 text-xl font-bold">{title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-ink-muted">{description}</p>

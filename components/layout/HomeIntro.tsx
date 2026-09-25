@@ -67,7 +67,7 @@ export default function HomeIntro() {
       <span className={styles.watermark} aria-hidden="true">SSE</span>
       <div className={styles.center}>
         <div className={styles.logoWrap}>
-          <Image src="/images/brand/logo-full.png" alt="Shree Sanjay Equipments" width={420} height={304} className={styles.logo} priority />
+          <Image src="/images/brand/logo-full.png" alt="Shree Sanjay Equipments" width={420} height={315} className={styles.logo} unoptimized priority />
         </div>
         <span className={styles.tagline}>Built for every job site.</span>
       </div>

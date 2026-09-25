@@ -34,7 +34,7 @@ export default function Footer() {
         <div className="grid gap-x-8 gap-y-12 py-12 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,.7fr)_minmax(0,1fr)_minmax(0,1.2fr)] lg:py-16">
           <div className="max-w-sm">
             <Link href="/" aria-label="Shree Sanjay Equipments home" className="inline-block rounded-md bg-paper px-4 py-2">
-              <Image src="/images/brand/logo-full.png" alt="Shree Sanjay Equipments" width={300} height={216} className="h-auto w-48" />
+              <Image src="/images/brand/logo-full.png" alt="Shree Sanjay Equipments" width={300} height={225} className="h-auto w-48" unoptimized />
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/65">
               Based in Coimbatore since 2004. Construction equipment, repairs and servicing for the work ahead.

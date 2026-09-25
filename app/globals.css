@@ -17,6 +17,7 @@
 }
 
 @theme inline {
+  --container-7xl: clamp(80rem, 94vw, 144rem);
   --color-paper: var(--color-paper);
   --color-surface: var(--color-surface);
   --color-ink: var(--color-ink);
