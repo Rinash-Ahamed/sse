@@ -6,7 +6,6 @@ import { getProductBySlug, products } from "@/lib/products";
 import ProductGallery from "@/components/products/ProductGallery";
 import ProductInfo from "@/components/products/ProductInfo";
 import ProductCard from "@/components/products/ProductCard";
-import { products as allProducts } from "@/lib/products";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -35,7 +34,7 @@ export default async function ProductDetailPage({
   const product = getProductBySlug(slug);
   if (!product) notFound();
 
-  const related = allProducts
+  const related = products
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 3);
 

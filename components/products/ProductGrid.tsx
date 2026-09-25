@@ -1,101 +1,90 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { products, categories, type CategorySlug } from "@/lib/products";
 import ProductCard from "@/components/products/ProductCard";
-import { cn } from "@/lib/utils";
+import styles from "./ProductGrid.module.css";
 
 type FilterValue = CategorySlug | "all";
+
+const filters: { value: FilterValue; label: string; count: number }[] = [
+  { value: "all", label: "All Equipment", count: products.length },
+  ...categories.map((category) => ({
+    value: category.slug,
+    label: category.shortName,
+    count: products.filter((product) => product.category === category.slug).length,
+  })),
+];
 
 export default function ProductGrid({ initialCategory = "all" }: { initialCategory?: FilterValue }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterValue>(initialCategory);
 
   const filtered = useMemo(() => {
-    return products.filter((p) => {
-      const matchesCategory = filter === "all" || p.category === filter;
-      const q = query.trim().toLowerCase();
-      const matchesQuery =
-        !q ||
-        p.name.toLowerCase().includes(q) ||
-        p.shortDescription.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q);
+    const search = query.trim().toLowerCase();
+    return products.filter((product) => {
+      const matchesCategory = filter === "all" || product.category === filter;
+      const matchesQuery = !search ||
+        product.name.toLowerCase().includes(search) ||
+        product.shortDescription.toLowerCase().includes(search) ||
+        product.category.toLowerCase().includes(search);
       return matchesCategory && matchesQuery;
     });
   }, [query, filter]);
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-4 text-ink-muted" />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by equipment name"
-            aria-label="Search equipment"
-            className="w-full border-b border-line bg-transparent py-2.5 pl-7 text-sm outline-none placeholder:text-ink-muted focus:border-ink transition-colors"
-          />
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          <FilterChip label="All" active={filter === "all"} onClick={() => setFilter("all")} />
-          {categories.map((c) => (
-            <FilterChip
-              key={c.slug}
-              label={c.shortName}
-              active={filter === c.slug}
-              onClick={() => setFilter(c.slug)}
+      <div className={styles.toolbar}>
+        <div className={styles.topline}>
+          <p className="label-mono text-[10px] font-semibold text-ink-muted">Equipment Index <span className="mx-2 text-accent">/</span> Select a category</p>
+          <div className={styles.search}>
+            <Search className="h-[18px] w-[18px] shrink-0 text-ink-muted" aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search equipment"
+              aria-label="Search equipment"
+              className={styles.searchInput}
             />
+            {query && <button type="button" onClick={() => setQuery("")} aria-label="Clear search" className={styles.clear}><X className="h-4 w-4" aria-hidden="true" /></button>}
+          </div>
+        </div>
+        <div className={styles.rail} role="group" aria-label="Filter equipment by category">
+          {filters.map(({ value, label, count }, index) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => setFilter(value)}
+              aria-pressed={filter === value}
+              className={`${styles.option} ${filter === value ? styles.active : ""}`}
+            >
+              <span className={styles.optionIndex}>{String(index + 1).padStart(2, "0")}</span>
+              <span className={styles.optionLabel}>{label}</span>
+              <span className={styles.optionCount}>{count}</span>
+            </button>
           ))}
         </div>
       </div>
 
-      <p className="mt-6 text-xs text-ink-muted label-mono">
-        {filtered.length} {filtered.length === 1 ? "RESULT" : "RESULTS"}
-      </p>
+      <div className={styles.resultBar} aria-live="polite">
+        <p className="label-mono text-[10px] text-ink-muted">{filtered.length} {filtered.length === 1 ? "result" : "results"}</p>
+        <span className={styles.resultLine} aria-hidden="true" />
+        <p className="label-mono text-[10px] text-accent">{filters.find((item) => item.value === filter)?.label}</p>
+      </div>
 
       {filtered.length > 0 ? (
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filtered.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
+        <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
+          {filtered.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       ) : (
-        <div className="mt-20 text-center">
-          <p className="text-sm text-ink-muted">
-            No equipment found.
-            <br />
-            Try a different name or category.
-          </p>
+        <div className="border-b border-line py-20 text-center">
+          <p className="font-heading text-xl font-semibold">No equipment found.</p>
+          <p className="mt-2 text-sm text-ink-muted">Try a different search or category.</p>
+          <button type="button" onClick={() => { setFilter("all"); setQuery(""); }} className="mt-5 border-b border-accent pb-1 text-sm font-medium text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Show all equipment</button>
         </div>
       )}
     </div>
-  );
-}
-
-function FilterChip({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "px-3.5 py-1.5 text-[12.5px] font-medium border transition-colors whitespace-nowrap",
-        active
-          ? "bg-accent text-white border-accent"
-          : "border-line text-ink-muted hover:border-ink/40 hover:text-ink",
-      )}
-    >
-      {label}
-    </button>
   );
 }

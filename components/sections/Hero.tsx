@@ -121,8 +121,8 @@ export default function Hero() {
     const context = canvas?.getContext("2d");
     if (!videoPlaying || !hero || !video || !lens || !canvas || !context) return;
 
-    const lensSize = 210;
-    const viewportSize = 192;
+    const lensSize = 160;
+    const viewportSize = 142;
     const zoom = 1.2;
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(viewportSize * pixelRatio);
@@ -196,6 +196,7 @@ export default function Hero() {
           {canPlayVideo && (
             <video
               ref={videoRef}
+              data-hero-video
               className={`${styles.video} ${videoPlaying ? styles.videoVisible : ""}`}
               src="/images/hero/hero-video.mp4"
               muted

@@ -1,0 +1,23 @@
+.iconFrame {
+  transition: transform 350ms cubic-bezier(.2,.8,.2,1), background-color 350ms ease, border-color 350ms ease;
+}
+
+.icon {
+  transition: transform 400ms cubic-bezier(.2,.8,.2,1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .iconFrame {
+    transform: translateY(-3px);
+    background-color: rgba(176, 0, 24, .1);
+    border-color: rgba(176, 0, 24, .4);
+  }
+
+  .card:hover .icon {
+    transform: translate(2px, -2px) rotate(-7deg) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iconFrame, .icon { transition: none; }
+}

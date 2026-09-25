@@ -8,10 +8,12 @@ import Applications from "@/components/sections/Applications";
 import EnquiryCTA from "@/components/sections/EnquiryCTA";
 import ContactPreview from "@/components/sections/ContactPreview";
 import Services from "@/components/sections/Services";
+import HomeIntro from "@/components/layout/HomeIntro";
 
 export default function Home() {
   return (
     <>
+      <HomeIntro />
       <Hero />
       <CapabilityStrip />
       <FeaturedProducts />

@@ -1,0 +1,87 @@
+.overlay {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: clamp(22px, 3vw, 46px);
+  background: #f6f4ef;
+  color: #202427;
+  isolation: isolate;
+}
+.visible { display: flex; }
+.overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, transparent calc(50% - .5px), rgba(32,36,39,.055) 50%, transparent calc(50% + .5px));
+  pointer-events: none;
+}
+.topLabel, .bottom {
+  position: relative;
+  z-index: 2;
+  font: 600 10px/1.4 var(--font-body);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.topLabel span { color: #b00018; padding: 0 8px; }
+.watermark {
+  position: absolute;
+  right: -2vw;
+  bottom: 6vh;
+  color: rgba(32,36,39,.035);
+  font: 800 clamp(150px, 35vw, 600px)/.7 var(--font-heading);
+  letter-spacing: -.12em;
+  user-select: none;
+}
+.center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: auto 0;
+}
+.logoWrap {
+  width: min(68vw, 360px);
+  animation: logoReveal 700ms cubic-bezier(.2,.8,.2,1) both;
+}
+.logo { display: block; width: 100%; height: auto; }
+.tagline {
+  color: #4b5156;
+  font: 600 clamp(11px, 1.4vw, 14px)/1.4 var(--font-heading);
+  letter-spacing: .08em;
+  animation: taglineReveal 650ms ease 220ms both;
+}
+.bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: #6b7074; }
+.dot { display: inline-block; width: 3px; height: 3px; margin: 0 5px 3px; border-radius: 50%; background: #b00018; }
+.progress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: #b00018;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: progress 2.6s linear both;
+}
+.exiting { animation: introExit 420ms ease-in both; pointer-events: none; }
+@keyframes logoReveal { from { opacity: 0; transform: translateY(16px) scale(.96); filter: blur(5px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes taglineReveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes progress { to { transform: scaleX(1); } }
+@keyframes introExit { to { opacity: 0; transform: translateY(-2%); } }
+@media (max-width: 640px) {
+  .overlay { padding: 22px; }
+  .logoWrap { width: min(78vw, 320px); }
+  .bottom { font-size: 8px; letter-spacing: .11em; }
+  .bottom > span:last-child { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overlay, .logoWrap, .tagline, .progress { animation: none; }
+}
