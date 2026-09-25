@@ -24,6 +24,7 @@ export type Product = {
   applications?: string[];
 
   images?: string[];
+  featuredImage?: string;
   featured?: boolean;
   brand?: string;
 
@@ -110,6 +111,7 @@ export const products: Product[] = [
   {
     id: "forward-plate-compactor",
     images: ["/images/products/10.png"],
+    featuredImage: "/images/products/featured/forward-plate-compactor.png",
     slug: "forward-plate-compactor",
     name: "Forward Plate Compactor",
     category: "compaction",
@@ -126,6 +128,7 @@ export const products: Product[] = [
   {
     id: "construction-monkey-hoist",
     images: ["/images/products/9.png","/images/products/14.png"],
+    featuredImage: "/images/products/featured/construction-monkey-hoist.png",
     slug: "construction-monkey-hoist",
     name: "Construction Monkey Hoist Machine",
     category: "material-lifting",
@@ -142,6 +145,7 @@ export const products: Product[] = [
   {
     id: "vibrator-sand-screening-machine",
     images: ["/images/products/5.png"],
+    featuredImage: "/images/products/featured/sand-screening-machine.png",
     slug: "vibrator-sand-screening-machine",
     name: "Vibrator Sand Screening Machine",
     category: "screening",
@@ -158,6 +162,7 @@ export const products: Product[] = [
   {
     id: "electric-concrete-mixer",
     images: ["/images/products/12.png"],
+    featuredImage: "/images/products/featured/electric-concrete-mixer.png",
     slug: "electric-concrete-mixer",
     name: "Electric Concrete Mixer",
     category: "concrete-equipment",
@@ -174,6 +179,7 @@ export const products: Product[] = [
   {
     id: "earth-rammer",
     images: ["/images/products/15.png"],
+    featuredImage: "/images/products/featured/earth-rammer.png",
     slug: "earth-rammer",
     name: "Earth Rammer",
     category: "compaction",

@@ -77,10 +77,9 @@
 }
 .nodeProductImage {
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-  padding: 0;
-  mix-blend-mode: multiply;
+  padding: 7%;
   transform: scale(1.03);
   transition: transform 420ms cubic-bezier(.2,.8,.2,1);
 }
@@ -146,9 +145,8 @@
   object-fit: contain;
   object-position: center;
   padding: 5%;
-  mix-blend-mode: multiply;
 }
-.largeProductImage { object-fit: contain; padding: 2%; mix-blend-mode: multiply; }
+.largeProductImage { object-fit: contain; padding: 5%; }
 .blueprintRing {
   position: absolute;
   top: 50%;

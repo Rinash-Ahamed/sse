@@ -104,7 +104,7 @@ function ProductNodes({ products, activeIndex, progress, onSelect }: {
             >
               <span className={styles.nodeRing} aria-hidden="true" />
               <span className={styles.nodeImage}>
-                {product.images?.[0] && <Image src={product.images[0]} alt="" fill sizes="112px" className={styles.nodeProductImage} />}
+                {product.images?.[0] && <Image src={product.featuredImage ?? product.images[0]} alt="" fill sizes="112px" className={styles.nodeProductImage} />}
               </span>
               <span className={styles.nodeName}>{product.name}</span>
             </button>
@@ -138,7 +138,7 @@ function ProductPanel({ product, activeIndex, reducedMotion, visualY }: {
               transition={{ duration: reducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
             >
               {product.images?.[0] && (
-                <Image src={product.images[0]} alt={product.name} fill quality={85} sizes="(max-width: 1024px) 55vw, 560px" className={styles.panelProductImage} />
+                <Image src={product.featuredImage ?? product.images[0]} alt={product.name} fill quality={85} sizes="(max-width: 1024px) 55vw, 560px" className={styles.panelProductImage} />
               )}
             </motion.div>
           </AnimatePresence>
@@ -177,7 +177,7 @@ function MobileProductCard({ product, index, reducedMotion }: { product: Product
     >
       <div className={styles.mobileImage}>
         <span className={styles.mobileRing} aria-hidden="true" />
-        {product.images?.[0] && <Image src={product.images[0]} alt={product.name} fill sizes="86vw" className={styles.largeProductImage} />}
+        {product.images?.[0] && <Image src={product.featuredImage ?? product.images[0]} alt={product.name} fill sizes="86vw" className={styles.largeProductImage} />}
         <span className={styles.mobileIndex}>0{index + 1}</span>
       </div>
       <div className={styles.mobileCopy}>
