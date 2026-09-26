@@ -45,7 +45,7 @@ export default function Footer() {
             <h3 className="label-mono mb-5 text-[11px] text-white/45">Explore</h3>
             <nav aria-label="Footer navigation" className="flex flex-col gap-3">
               <Link href="/products" className={footerLink}>Products</Link>
-              <Link href="/#services" className={footerLink}>Repairs &amp; Servicing</Link>
+              <Link href="/#services" scroll={false} className={footerLink}>Repairs &amp; Servicing</Link>
               <Link href="/about" className={footerLink}>About Us</Link>
               <Link href="/contact" className={footerLink}>Contact</Link>
             </nav>

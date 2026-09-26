@@ -29,6 +29,7 @@ export default function CapabilityStrip() {
           >
             <Link
               href={href}
+              scroll={!href.includes("#")}
               aria-label={`${title}: ${detail}`}
               className={`${styles.card} group relative flex min-h-24 items-center gap-4 overflow-hidden rounded-xl border border-line bg-surface/40 px-4 py-4 transition-colors hover:border-accent/35 hover:bg-surface/75 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-accent`}
             >

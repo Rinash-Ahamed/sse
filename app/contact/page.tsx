@@ -27,7 +27,7 @@ export default function ContactPage() {
       </p>
 
       <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12">
-        <div id="location" className="min-w-0 scroll-mt-28 lg:col-span-5">
+        <div id="location" className="min-w-0 lg:col-span-5">
           <p className="font-heading font-bold text-xl tracking-tight">SHREE SANJAY EQUIPMENTS</p>
           <p className="mt-2 text-sm text-ink-muted leading-relaxed">
             52/1, Avinashi Road, R.G. Pudur,
@@ -102,7 +102,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <div id="enquiry" className="min-w-0 scroll-mt-24 lg:col-span-7">
+        <div id="enquiry" className="min-w-0 lg:col-span-7">
           <h2 className="font-heading text-2xl font-bold tracking-tight">Send an enquiry</h2>
           <p className="mb-7 mt-2 text-sm leading-relaxed text-ink-muted">
             Tell us what equipment or service you need. Fields marked * are required.

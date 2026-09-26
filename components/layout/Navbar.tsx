@@ -94,19 +94,19 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className={cn("sticky top-3 z-50 mx-3 translate-z-0 rounded-2xl border border-white/80 bg-paper/96 shadow-[0_12px_40px_rgba(32,36,39,0.13)] xl:mx-4", pathname === "/" && "-mb-18 sm:-mb-20")}>
+    <header data-site-header className={cn("sticky top-3 z-50 mx-3 translate-z-0 rounded-2xl border border-white/80 bg-paper/96 shadow-[0_12px_40px_rgba(32,36,39,0.13)] xl:mx-4", pathname === "/" && "-mb-18 sm:-mb-20")}>
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-2 px-4 sm:h-20 sm:gap-4 sm:px-6 lg:px-8 xl:px-10">
         <Brand onClick={(event) => handleNavigation(event, "/")} />
         <nav aria-label="Main navigation" className="hidden items-center gap-2 rounded-full border border-line/70 bg-white/55 p-1 xl:flex">
           {links.map(({ href, label }) => (
-            <Link key={href} href={href} onClick={(event) => handleNavigation(event, href)} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("inline-flex min-h-10 items-center rounded-full px-5 text-[13px] font-semibold transition-colors hover:text-accent", focusStyle, isActive(href) ? "bg-paper text-accent shadow-sm" : "text-ink-muted")}>
+            <Link key={href} href={href} scroll={!href.includes("#")} onClick={(event) => handleNavigation(event, href)} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("inline-flex min-h-10 items-center rounded-full px-5 text-[13px] font-semibold transition-colors hover:text-accent", focusStyle, isActive(href) ? "bg-paper text-accent shadow-sm" : "text-ink-muted")}>
               {label}
             </Link>
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <a href="tel:+919842230721" aria-label="Call Shree Sanjay Equipments" className={cn("inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-accent transition-colors hover:bg-surface sm:hidden", focusStyle)}><Phone className="h-[18px] w-[18px]" aria-hidden="true" /></a>
-          <Link href="/contact#enquiry" className={cn("hidden min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-[13px] font-semibold text-white shadow-[0_7px_18px_rgba(176,0,24,0.2)] transition-all hover:-translate-y-0.5 hover:bg-accent-strong xl:inline-flex", focusStyle)}>Get a Quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
+          <Link href="/contact#enquiry" scroll={false} className={cn("hidden min-h-11 items-center gap-2 rounded-xl bg-accent px-5 text-[13px] font-semibold text-white shadow-[0_7px_18px_rgba(176,0,24,0.2)] transition-all hover:-translate-y-0.5 hover:bg-accent-strong xl:inline-flex", focusStyle)}>Get a Quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
           <button ref={toggleRef} type="button" className={cn("inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-xl bg-ink px-3 text-sm font-medium text-white transition-colors hover:bg-accent xl:hidden", focusStyle)} onClick={() => setOpen(true)} aria-label="Open navigation menu" aria-haspopup="dialog" aria-expanded={open} aria-controls="mobile-navigation">
             <Menu className="h-5 w-5" aria-hidden="true" /><span className="hidden sm:inline">Menu</span>
           </button>
@@ -134,7 +134,7 @@ export default function Navbar() {
             <h2 id="navigation-title" className="label-mono mb-4 text-[10px] text-ink-muted">Explore Shree Sanjay</h2>
             <nav aria-label="Mobile and tablet navigation" className="space-y-1">
               {links.map(({ href, label, icon: Icon, description }) => (
-                <Link key={href} href={href} onClick={(event) => handleNavigation(event, href)} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("group flex min-h-[68px] items-center gap-3 rounded-lg px-3 py-3 transition-colors hover:bg-surface", focusStyle, isActive(href) && "bg-accent/7")}>
+                <Link key={href} href={href} scroll={!href.includes("#")} onClick={(event) => handleNavigation(event, href)} aria-current={isActive(href) ? (href.includes("#") ? "location" : "page") : undefined} className={cn("group flex min-h-[68px] items-center gap-3 rounded-lg px-3 py-3 transition-colors hover:bg-surface", focusStyle, isActive(href) && "bg-accent/7")}>
                   <span className={cn("inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md", isActive(href) ? "bg-accent text-white" : "border border-line bg-paper text-accent")}><Icon className="h-5 w-5" strokeWidth={1.6} aria-hidden="true" /></span>
                   <span className="min-w-0 flex-1"><span className={cn("block text-sm font-semibold", isActive(href) && "text-accent")}>{label}</span><span className="mt-1 block text-[11px] leading-relaxed text-ink-muted">{description}</span></span>
                   <ArrowUpRight className="h-4 w-4 shrink-0 text-ink-muted group-hover:text-accent" aria-hidden="true" />
@@ -144,7 +144,7 @@ export default function Navbar() {
             <div className="mt-6 border-t border-line pt-6">
               <p className="text-sm font-semibold">Let&apos;s get your job moving.</p>
               <p className="mt-1 text-xs leading-relaxed text-ink-muted">Equipment enquiries, repairs and servicing.</p>
-              <Link href="/contact#enquiry" onClick={() => setOpen(false)} className={cn("mt-4 flex min-h-12 items-center justify-between rounded-md bg-accent px-4 text-sm font-medium text-white hover:bg-accent-strong", focusStyle)}>Get a Quote <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+              <Link href="/contact#enquiry" scroll={false} onClick={() => setOpen(false)} className={cn("mt-4 flex min-h-12 items-center justify-between rounded-md bg-accent px-4 text-sm font-medium text-white hover:bg-accent-strong", focusStyle)}>Get a Quote <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
               <div className="mt-3 grid grid-cols-2 gap-3">
                 <a href="tel:+919842230721" className={cn("inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line text-xs font-medium hover:bg-surface", focusStyle)}><Phone className="h-4 w-4 text-accent" aria-hidden="true" />Call Us</a>
                 <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className={cn("inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line text-xs font-medium hover:bg-surface", focusStyle)}><MessageCircle className="h-4 w-4 text-accent" aria-hidden="true" />WhatsApp</a>
