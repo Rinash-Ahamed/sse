@@ -187,7 +187,7 @@ export default function CatalogDownload() {
       context.font = "400 17px Inter, Arial";
       context.letterSpacing = "0px";
       context.fillText("52/1, Avinashi Road, R.G. Pudur, Coimbatore 641062", PAGE_PADDING, footerY + 122);
-      context.fillText("+91 98422 30721  |  +91 98421 06090  |  sanjayequipments@gmail.com", PAGE_PADDING, footerY + 158);
+      context.fillText("+91 98422 30721  |  +91 98421 06090  |  WhatsApp: +91 99424 06090", PAGE_PADDING, footerY + 158);
       context.textAlign = "right";
       context.fillStyle = "#FFFFFF";
       context.font = "700 18px Inter, Arial";

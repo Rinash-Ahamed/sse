@@ -70,6 +70,9 @@ export default function Footer() {
                 <div className="flex flex-col gap-1">
                   <a href="tel:+919842230721" className="hover:text-white">+91 98422 30721</a>
                   <a href="tel:+919842106090" className="hover:text-white">+91 98421 06090</a>
+                  <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                    +91 99424 06090 <span className="text-xs text-white/45">(WhatsApp)</span>
+                  </a>
                 </div>
               </div>
               <a href="mailto:sanjayequipments@gmail.com" className="flex items-start gap-3 break-all hover:text-white">
@@ -81,19 +84,24 @@ export default function Footer() {
                 <span>Avinashi Road, Coimbatore<br />Tamil Nadu 641062</span>
               </Link>
             </div>
+            <div className="mt-8 border-t border-white/15 pt-6">
+              <h3 className="label-mono mb-4 text-[11px] text-white/45">Social</h3>
+              <a
+                href="https://www.instagram.com/shreesanjayequipments?stkn=dmkzODBseGN5eWVy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex w-fit items-center gap-2 text-sm text-white/65 transition-colors hover:text-white"
+              >
+                <InstagramIcon className="h-4 w-4" />
+                Instagram
+                <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-white/15 py-6 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
+        <div className="border-t border-white/15 py-6 text-xs text-white/45">
           <p>© {year} Shree Sanjay Equipments. All rights reserved.</p>
-          <a
-            href="https://www.instagram.com/shreesanjayequipments?stkn=dmkzODBseGN5eWVy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-fit items-center gap-2 transition-colors hover:text-white"
-          >
-            <InstagramIcon className="h-4 w-4" /> Instagram <ArrowUpRight className="h-3 w-3" />
-          </a>
         </div>
       </div>
     </footer>
