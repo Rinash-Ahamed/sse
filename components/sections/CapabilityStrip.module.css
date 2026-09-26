@@ -6,6 +6,10 @@
   transition: transform 400ms cubic-bezier(.2,.8,.2,1);
 }
 
+.arrow {
+  transition: color 250ms ease, transform 350ms cubic-bezier(.2,.8,.2,1);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .card:hover .iconFrame {
     transform: translateY(-3px);
@@ -16,8 +20,13 @@
   .card:hover .icon {
     transform: translate(2px, -2px) rotate(-7deg) scale(1.08);
   }
+
+  .card:hover .arrow {
+    color: var(--color-accent);
+    transform: translate(3px, -3px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .iconFrame, .icon { transition: none; }
+  .iconFrame, .icon, .arrow { transition: none; }
 }

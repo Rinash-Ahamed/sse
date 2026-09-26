@@ -27,7 +27,7 @@ export default function ContactPage() {
       </p>
 
       <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12">
-        <div className="min-w-0 lg:col-span-5">
+        <div id="location" className="min-w-0 scroll-mt-28 lg:col-span-5">
           <p className="font-heading font-bold text-xl tracking-tight">SHREE SANJAY EQUIPMENTS</p>
           <p className="mt-2 text-sm text-ink-muted leading-relaxed">
             52/1, Avinashi Road, R.G. Pudur,
