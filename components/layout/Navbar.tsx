@@ -30,9 +30,10 @@ function Brand({ onClick }: { onClick?: (event: MouseEvent<HTMLAnchorElement>) =
   return (
     <Link href="/" aria-label="Shree Sanjay Equipments home" onClick={onClick} className={cn("flex min-w-0 shrink-0 items-center gap-1.5 rounded-md sm:gap-2", focusStyle)}>
       <Image src="/images/brand/logo-mark.png" alt="" width={48} height={48} className="h-9 w-9 shrink-0 object-contain sm:h-12 sm:w-12" unoptimized priority />
-      <span className="font-heading leading-tight">
+      <span className="font-heading leading-none">
         <span className="block text-[11px] font-extrabold tracking-tight text-accent sm:text-base">SHREE SANJAY</span>
         <span className="mt-1 block text-[8px] font-semibold tracking-[0.2em] text-ink sm:text-[10px] sm:tracking-[0.22em]">EQUIPMENTS</span>
+        <span className="mt-1 block text-[6px] font-semibold tracking-[0.24em] text-ink-muted sm:text-[8px] sm:tracking-[0.28em]">SINCE 2004</span>
       </span>
     </Link>
   );

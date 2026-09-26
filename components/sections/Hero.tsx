@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, MessageCircle, Play } from "lucide-react";
 import { generalWhatsAppLink } from "@/lib/whatsapp";
 import styles from "./Hero.module.css";
 
@@ -28,9 +28,9 @@ export default function Hero() {
   const [headlineIndex, setHeadlineIndex] = useState(0);
   const [canPlayVideo, setCanPlayVideo] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [videoBlocked, setVideoBlocked] = useState(false);
 
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1024px)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const reducedData = window.matchMedia("(prefers-reduced-data: reduce)");
     const device = navigator as Navigator & { deviceMemory?: number; connection?: NetworkConnection };
@@ -40,23 +40,24 @@ export default function Hero() {
       const slowConnection = connection?.saveData
         || ["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "")
         || (connection?.downlink !== undefined && connection.downlink < 2.5);
-      const lowerEndDevice = (device.deviceMemory !== undefined && device.deviceMemory < 4)
-        || (device.hardwareConcurrency !== undefined && device.hardwareConcurrency <= 2);
-      const eligible = desktop.matches && !reducedMotion.matches && !reducedData.matches
+      const lowerEndDevice = device.deviceMemory !== undefined && device.deviceMemory < 4;
+      const supportsMp4 = document.createElement("video").canPlayType("video/mp4") !== "";
+      const eligible = supportsMp4 && !reducedMotion.matches && !reducedData.matches
         && !slowConnection && !lowerEndDevice && navigator.onLine;
       setCanPlayVideo(eligible);
-      if (!eligible) setVideoPlaying(false);
+      if (!eligible) {
+        setVideoPlaying(false);
+        setVideoBlocked(false);
+      }
     };
 
     updateVideoEligibility();
-    desktop.addEventListener("change", updateVideoEligibility);
     reducedMotion.addEventListener("change", updateVideoEligibility);
     reducedData.addEventListener("change", updateVideoEligibility);
     connection?.addEventListener("change", updateVideoEligibility);
     window.addEventListener("online", updateVideoEligibility);
     window.addEventListener("offline", updateVideoEligibility);
     return () => {
-      desktop.removeEventListener("change", updateVideoEligibility);
       reducedMotion.removeEventListener("change", updateVideoEligibility);
       reducedData.removeEventListener("change", updateVideoEligibility);
       connection?.removeEventListener("change", updateVideoEligibility);
@@ -73,11 +74,13 @@ export default function Hero() {
     let inView = true;
     const syncPlayback = () => {
       if (inView && document.visibilityState === "visible") {
+        video.defaultMuted = true;
+        video.muted = true;
         void video.play().catch((error: unknown) => {
           // React's development effect cleanup and ordinary visibility changes can cancel play().
           // Those AbortErrors should not permanently disable the video.
           if (error instanceof DOMException && error.name === "AbortError") return;
-          setCanPlayVideo(false);
+          setVideoBlocked(true);
         });
       } else {
         video.pause();
@@ -95,6 +98,16 @@ export default function Hero() {
       video.pause();
     };
   }, [canPlayVideo]);
+
+  const playVideoManually = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.defaultMuted = true;
+    video.muted = true;
+    void video.play()
+      .then(() => setVideoBlocked(false))
+      .catch(() => setVideoBlocked(true));
+  };
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -200,17 +213,18 @@ export default function Hero() {
               ref={videoRef}
               data-hero-video
               className={`${styles.video} ${videoPlaying ? styles.videoVisible : ""}`}
-              src="/images/hero/hero-video.mp4"
               muted
               autoPlay
               loop
               playsInline
               preload="auto"
               poster="/images/hero/sse-hero.png"
-              onPlaying={() => setVideoPlaying(true)}
-              onError={() => { setVideoPlaying(false); setCanPlayVideo(false); }}
+              onPlaying={() => { setVideoPlaying(true); setVideoBlocked(false); }}
+              onError={() => { setVideoPlaying(false); setVideoBlocked(false); setCanPlayVideo(false); }}
               onPause={() => setVideoPlaying(false)}
-            />
+            >
+              <source src="/images/hero/hero-video.mp4" type="video/mp4" />
+            </video>
           )}
         </div>
       </div>
@@ -221,6 +235,17 @@ export default function Hero() {
           <span className={styles.lensFocus} />
           <span className={styles.lensAccent} />
         </div>
+      )}
+      {canPlayVideo && videoBlocked && !videoPlaying && (
+        <button
+          type="button"
+          onClick={playVideoManually}
+          className="absolute bottom-5 right-5 z-40 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/80 bg-paper/95 px-4 text-xs font-semibold text-ink shadow-lg transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:bottom-7 sm:right-7"
+          aria-label="Play hero video"
+        >
+          <Play className="h-4 w-4 fill-accent text-accent" aria-hidden="true" />
+          Play video
+        </button>
       )}
       <div className="relative z-30 mx-auto w-full max-w-7xl px-5 pb-16 pt-28 sm:pb-20 sm:pt-32 md:px-8 md:py-24">
         <div className="max-w-xl">
