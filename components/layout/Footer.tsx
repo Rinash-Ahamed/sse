@@ -84,18 +84,34 @@ export default function Footer() {
                 <span>Avinashi Road, Coimbatore<br />Tamil Nadu 641062</span>
               </Link>
             </div>
-            <div className="mt-8 border-t border-white/15 pt-6">
-              <h3 className="label-mono mb-4 text-[11px] text-white/45">Social</h3>
-              <a
-                href="https://www.instagram.com/shreesanjayequipments?stkn=dmkzODBseGN5eWVy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex w-fit items-center gap-2 text-sm text-white/65 transition-colors hover:text-white"
-              >
-                <InstagramIcon className="h-4 w-4" />
-                Instagram
-                <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-              </a>
+            <div className="mt-8 pt-1">
+              <h3 className="label-mono mb-4 flex items-center gap-3 text-[11px] text-white/45">
+                Social <span className="w-8 border-t border-white/25" aria-hidden="true" />
+              </h3>
+              <div className="flex flex-wrap gap-x-5 gap-y-3">
+                <a
+                  href="https://www.instagram.com/shreesanjayequipments?stkn=dmkzODBseGN5eWVy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex w-fit items-center gap-2 text-sm text-white/65 transition-colors hover:text-white"
+                >
+                  <InstagramIcon className="h-4 w-4" />
+                  Instagram
+                  <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                </a>
+                <a
+                  href="https://www.facebook.com/profile.php?id=61593975491319"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex w-fit items-center gap-2 text-sm text-white/65 transition-colors hover:text-white"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                    <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5h1.7V3.9c-.3 0-1.4-.1-2.6-.1-2.6 0-4.3 1.6-4.3 4.4V10H7v3h2.9v8h3.6z" />
+                  </svg>
+                  Facebook
+                  <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
