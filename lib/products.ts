@@ -111,7 +111,7 @@ export const products: Product[] = [
   {
     id: "forward-plate-compactor",
     images: ["/images/products/10.png"],
-    featuredImage: "/images/products/featured/forward-plate-compactor.png",
+    featuredImage: "/images/products/featured/forward-plate-compactor.webp",
     slug: "forward-plate-compactor",
     name: "Forward Plate Compactor",
     category: "compaction",
@@ -128,7 +128,7 @@ export const products: Product[] = [
   {
     id: "construction-monkey-hoist",
     images: ["/images/products/9.png","/images/products/14.png"],
-    featuredImage: "/images/products/featured/construction-monkey-hoist.png",
+    featuredImage: "/images/products/featured/construction-monkey-hoist.webp",
     slug: "construction-monkey-hoist",
     name: "Construction Monkey Hoist Machine",
     category: "material-lifting",
@@ -145,7 +145,7 @@ export const products: Product[] = [
   {
     id: "vibrator-sand-screening-machine",
     images: ["/images/products/5.png"],
-    featuredImage: "/images/products/featured/sand-screening-machine.png",
+    featuredImage: "/images/products/featured/sand-screening-machine.webp",
     slug: "vibrator-sand-screening-machine",
     name: "Vibrator Sand Screening Machine",
     category: "screening",
@@ -162,7 +162,7 @@ export const products: Product[] = [
   {
     id: "electric-concrete-mixer",
     images: ["/images/products/12.png"],
-    featuredImage: "/images/products/featured/electric-concrete-mixer.png",
+    featuredImage: "/images/products/featured/electric-concrete-mixer.webp",
     slug: "electric-concrete-mixer",
     name: "Electric Concrete Mixer",
     category: "concrete-equipment",
@@ -179,7 +179,7 @@ export const products: Product[] = [
   {
     id: "earth-rammer",
     images: ["/images/products/15.png"],
-    featuredImage: "/images/products/featured/earth-rammer.png",
+    featuredImage: "/images/products/featured/earth-rammer.webp",
     slug: "earth-rammer",
     name: "Earth Rammer",
     category: "compaction",

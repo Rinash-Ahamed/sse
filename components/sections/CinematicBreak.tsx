@@ -35,7 +35,7 @@ export default function CinematicBreak() {
             </video>
           </div>
           <div className="flex items-center justify-between gap-4 border-t border-white/15 pt-3 text-[10px] font-semibold uppercase tracking-[0.16em]">
-            <span className="text-white/65">On site with SSE</span><span className="text-white/45">SSE / 02</span>
+            <span className="text-white/65">On site with SSE</span><span className="text-white/45">Since 2004</span>
           </div>
         </div>
       </div>
