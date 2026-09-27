@@ -1,4 +1,4 @@
-export const WHATSAPP_NUMBER = "919942406090"; // +91 99424 06090
+export const WHATSAPP_NUMBER = "9179041081993"; // +91 79041 081993
 
 export function serviceWhatsAppLink(service: string) {
   const text = `Hello Shree Sanjay Equipments,\nI would like to enquire about ${service.toLowerCase()}.\n\nEquipment / model:\nIssue or servicing requirement:`;

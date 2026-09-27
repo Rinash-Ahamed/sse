@@ -31,9 +31,8 @@ export default function ContactPreview() {
                 <p className="label-mono text-[10px] text-ink-muted">Call us</p>
                 <p className="mt-2 flex flex-col items-start text-sm leading-relaxed">
                 <a href="tel:+919842230721" className="hover:text-accent">+91 98422 30721</a>
-                <a href="tel:+919842106090" className="hover:text-accent">+91 98421 06090</a>
                 <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
-                  +91 99424 06090 <span className="text-xs text-accent">(WhatsApp)</span>
+                  +91 79041 081993 <span className="text-xs text-accent">(WhatsApp)</span>
                 </a>
                 </p>
               </div>

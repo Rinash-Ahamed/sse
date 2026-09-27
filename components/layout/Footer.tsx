@@ -69,9 +69,8 @@ export default function Footer() {
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-white/45" />
                 <div className="flex flex-col gap-1">
                   <a href="tel:+919842230721" className="hover:text-white">+91 98422 30721</a>
-                  <a href="tel:+919842106090" className="hover:text-white">+91 98421 06090</a>
                   <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                    +91 99424 06090 <span className="text-xs text-white/45">(WhatsApp)</span>
+                    +91 79041 081993 <span className="text-xs text-white/45">(WhatsApp)</span>
                   </a>
                 </div>
               </div>
@@ -86,7 +85,7 @@ export default function Footer() {
             </div>
             <div className="mt-8 pt-1">
               <h3 className="label-mono mb-4 flex items-center gap-3 text-[11px] text-white/45">
-                Social <span className="w-8 border-t border-white/25" aria-hidden="true" />
+                Social
               </h3>
               <div className="flex flex-wrap gap-x-5 gap-y-3">
                 <a
