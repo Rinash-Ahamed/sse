@@ -60,7 +60,7 @@ const jsonLd = {
   name: "Shree Sanjay Equipments",
   foundingDate: "2004",
   image: "https://www.shreesanjayequipments.com/images/brand/logo-full.png",
-  telephone: ["+91 98422 30721", "+91 79041 081993"],
+  telephone: ["+91 98422 30721", "+91 79041 08199"],
   email: "sanjayequipments@gmail.com",
   address: {
     "@type": "PostalAddress",

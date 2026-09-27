@@ -70,7 +70,7 @@ export default function Footer() {
                 <div className="flex flex-col gap-1">
                   <a href="tel:+919842230721" className="hover:text-white">+91 98422 30721</a>
                   <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                    +91 79041 081993 <span className="text-xs text-white/45">(WhatsApp)</span>
+                    +91 79041 08199 <span className="text-xs text-white/45">(WhatsApp)</span>
                   </a>
                 </div>
               </div>

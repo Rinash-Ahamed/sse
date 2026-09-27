@@ -44,7 +44,7 @@ export default function ContactPage() {
                 <a href="tel:+919842230721" className="hover:text-accent">+91 98422 30721</a>
                 <br />
                 <a href={generalWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
-                  +91 79041 081993 <span className="text-xs text-accent">(WhatsApp)</span>
+                  +91 79041 08199 <span className="text-xs text-accent">(WhatsApp)</span>
                 </a>
               </dd>
             </div>
